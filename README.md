@@ -31,3 +31,9 @@ __What is the Purpose of this Repository__
 This collection is meant for education, discussion, and historical work, allowing researchers and students to study how code was made for these interactive fiction games and how the system dealt with input and processing. It is not considered to be under an open license. 
 
 Researchers are encouraged to share their discoveries about the information in this source code and the history of Infocom and its many innovative employees.
+
+__Some Trivia and Notes on this Repository__
+
+* The [original proposal](https://github.com/historicalsource/starcross/blob/master/starcross.txt) for STARCROSS, "The Ship From The Stars", is located in this directory. It is written by Dave Lebling and dated to November 1981.
+* The source code is derived from ZORK/DUNGEON and therefore has a DUNGEON.ZIL in it, likely to allow easy access to already-established room traversal routines. Earlier versions of the code call it "ZORK SF" game before the final name is chosen.
+* STARCROSS has support for Grues (the darkness-loving dangerous monsters first seen in ZORK/DUNGEON)
