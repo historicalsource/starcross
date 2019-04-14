@@ -48,6 +48,14 @@
 <GLOBAL P-INBUF <ITABLE BYTE 100>>
 ;"Parse-cont variable"  
  
+;"AGAIN globals"
+<GLOBAL A-LEXV <ITABLE BYTE 120>>
+<GLOBAL A-INBUF <ITABLE BYTE 100>>
+<GLOBAL A-PTR 0>
+<GLOBAL A-PTR2 0>;"need to save 2 pointers back"
+<GLOBAL NOT-AGAIN 2>;"values: <> if V-AGAIN is calling MAIN-LOOP
+		      	      1 if AGAIN was last verb; 2 otherwise"
+
 <GLOBAL P-CONT <>>  
  
 <GLOBAL P-IT-OBJECT <>>
@@ -124,6 +132,13 @@
  
 <GLOBAL QUOTE-FLAG <>>
 
+
+<ROUTINE TABLE-COPY (SRC DEST CNT)
+	 <SET CNT <* .CNT 2>>
+	 <REPEAT ()
+		 <COND (<DLESS? CNT 0> <RETURN>)
+		       (T <PUTB .DEST .CNT <GETB .SRC .CNT>>)>>>
+
 " Grovel down the input finding the verb, prepositions, and noun clauses.
    If the input is <direction> or <walk> <direction>, fall out immediately
    setting PRSA to ,V?WALK and PRSO to <direction>.  Otherwise, perform
@@ -154,6 +169,9 @@
 	       <SETG QUOTE-FLAG <>>
 	       <COND (<NOT <FSET? <LOC ,WINNER> ,VEHBIT>>
 		      <SETG HERE <LOC ,WINNER>>)>
+	       <COND (<==? ,NOT-AGAIN 2>
+		      <TABLE-COPY ,P-INBUF ,A-INBUF 50 ;100>
+		      <TABLE-COPY ,P-LEXV ,A-LEXV 60 ;120>)>
 	       <SET SCNT ,P-SPACE>
 	       <REPEAT ()
 		       <COND (<L? <SET SCNT <- .SCNT 1>> 0> <RETURN>)
@@ -165,7 +183,16 @@
 	<SET LEN ,P-LEN>
 	<SETG P-DIR <>>
 	<SETG P-NCN 0>
-	<SETG P-GETFLAGS 0>
+	<SETG P-GETFLAGS 0>	
+	;"3/25/83: Next statement added."
+	<PUT ,P-ITBL ,P-VERBN 0>
+	<COND (<==? ,NOT-AGAIN 2>
+	       <SETG A-PTR ,A-PTR2>
+	       <COND (<NOT <==? .PTR ,P-LEXSTART>>
+	       	      <TABLE-COPY ,P-INBUF ,A-INBUF 50 ;100>
+		      <TABLE-COPY ,P-LEXV ,A-LEXV 60 ;120>)>)
+	      (<==? ,NOT-AGAIN 1> <SETG NOT-AGAIN 2>)>
+	<SETG A-PTR2 .PTR>
 	<REPEAT ()
 		<COND (<L? <SETG P-LEN <- ,P-LEN 1>> 0>
 		       <SETG QUOTE-FLAG <>>
@@ -180,10 +207,10 @@
 			      <PUT ,P-ITBL ,P-VERB ,ACT?TELL>
 			      <PUT ,P-ITBL ,P-VERBN 0>
 			      <SET WORD ,W?QUOTE>)>
-		       <COND ;(<AND <EQUAL? .WORD ,W?.>
+		       <COND ;(<AND <EQUAL? .WORD ,W?PERIOD>
 				   <EQUAL? .LW ,W?MRS ,W?MR ,W?MS>>
 			      <SET LW 0>)
-			     (<OR <EQUAL? .WORD ,W?THEN ,W?.>
+			     (<OR <EQUAL? .WORD ,W?THEN ,W?PERIOD>
 				  <EQUAL? .WORD ,W?QUOTE>> 
 			      <COND (<EQUAL? .WORD ,W?QUOTE>
 				     <COND (,QUOTE-FLAG
@@ -206,7 +233,7 @@
 					            ,W?QUOTE>
 					    <==? .VERB ,ACT?WALK>
 					    <G? .LEN 2>>
-				       <AND <EQUAL? .NW ,W?.>
+				       <AND <EQUAL? .NW ,W?PERIOD>
 					    <EQUAL? .VERB ,ACT?WALK <>>
 					    <G? .LEN 1>>
 				       <AND ,QUOTE-FLAG
@@ -235,7 +262,6 @@
 			      <PUTB ,P-VTBL 3 <GETB ,P-LEXV <+ .NUM 1>>>)
 			     (<OR <SET VAL <WT? .WORD ,PS?PREPOSITION 0>>
 				  <AND <OR <EQUAL? .WORD ,W?ALL ,W?ONE ,W?A>
-					   <EQUAL? .WORD ,W?BOTH>
 					   <WT? .WORD ,PS?ADJECTIVE>
 					   <WT? .WORD ,PS?OBJECT>>
 				       <SET VAL 0>>>
@@ -246,12 +272,11 @@
 					  ;<NOT <EQUAL? .VERB ,ACT?ACCUSE>>
 					  <0? .VAL>
 					  <NOT
-					   <EQUAL? .WORD ,W?ALL ,W?ONE ,W?A>>
-					  <NOT <EQUAL? .WORD ,W?BOTH>>>)
+					   <EQUAL? .WORD ,W?ALL ,W?ONE ,W?A>>>)
 				    (<AND <NOT <0? .VAL>>
 				          <OR <0? ,P-LEN>
 					      <EQUAL? <GET ,P-LEXV <+ .PTR 2>>
-						      ,W?THEN ,W?.>>>
+						      ,W?THEN ,W?PERIOD>>>
 				     <COND (<L? ,P-NCN 2>
 					    <PUT ,P-ITBL ,P-PREP1 .VAL>
 					    <PUT ,P-ITBL ,P-PREP1N .WORD>)>)
@@ -332,15 +357,15 @@
 				   <==? <GET ,P-ITBL ,P-VERB> ,ACT?ACCUSE>>
 			      <PUT ,P-LEXV .PTR ,W?WITH>
 			      <SET WORD ,W?WITH>)>
-		       <COND ;(<AND <EQUAL? .WORD ,W?.>
+		       <COND ;(<AND <EQUAL? .WORD ,W?PERIOD>
 				   <EQUAL? .LW ,W?MRS ,W?MR ,W?MS>>
 			      <SET LW 0>)
 			     (<EQUAL? .WORD ,W?AND ,W?COMMA> <SET ANDFLG T>)
-			     (<EQUAL? .WORD ,W?ALL ,W?BOTH ,W?ONE>
+			     (<EQUAL? .WORD ,W?ALL ,W?ONE>
 			      <COND (<==? .NW ,W?OF>
 				     <SETG P-LEN <- ,P-LEN 1>>
 				     <SET PTR <+ .PTR ,P-LEXELEN>>)>)
-			     (<OR <EQUAL? .WORD ,W?THEN ,W?.>
+			     (<OR <EQUAL? .WORD ,W?THEN ,W?PERIOD>
 				  <AND <WT? .WORD ,PS?PREPOSITION>
 				       <NOT .FIRST??>>>
 			      <SETG P-LEN <+ ,P-LEN 1>>
@@ -621,7 +646,7 @@
 		      (T
 		       <COND (.NOSP <SET NOSP <>>)
 			     (T <TELL " ">)>
-		       <COND (<==? <SET WRD <GET .BEG 0>> ,W?.> <SET NOSP T>)
+		       <COND (<==? <SET WRD <GET .BEG 0>> ,W?PERIOD> <SET NOSP T>)
 			     ;(<==? .WRD ,W?MRS> <TELL "Mrs."> <SET PN T>)
 			     ;(<==? .WRD ,W?MS> <TELL "Ms."> <SET PN T>)
 			     ;(<==? .WRD ,W?MR> <TELL "Mr."> <SET PN T>)
@@ -795,7 +820,7 @@
 	   <COND (<==? .PTR .EPTR> <RETURN <GET-OBJECT <OR .BUT .TBL>>>)
 		 (T
 		  <SET NW <GET .PTR ,P-LEXELEN>>
-		  <COND (<EQUAL? .WORD ,W?ALL ,W?BOTH>
+		  <COND (<EQUAL? .WORD ,W?ALL>
 			 <SETG P-GETFLAGS ,P-ALL>
 			 <COND (<==? .NW ,W?OF>
 				<SET PTR <REST .PTR ,P-WORDLEN>>)>)
@@ -1176,3 +1201,18 @@
 		    <==? <GET <SET PTR <GET ,P-ITBL ,P-NC2>> 0> ,W?IT>>
 		<TELL " " D ,PRSO>)
 	       (T <BUFFER-PRINT .PTR <GET ,P-ITBL ,P-NC2L> <>>)>>
+
+<ROUTINE THIS-IT? (OBJ TBL "AUX" SYNS) 
+ <COND (<FSET? .OBJ ,INVISIBLE> <RFALSE>)
+       (<AND ,P-NAM
+	     <NOT <ZMEMQ ,P-NAM
+			 <SET SYNS <GETPT .OBJ ,P?SYNONYM>>
+			 <- </ <PTSIZE .SYNS> 2> 1>>>>
+	<RFALSE>)
+       (<AND ,P-ADJ
+	     <OR <NOT <SET SYNS <GETPT .OBJ ,P?ADJECTIVE>>>
+		 <NOT <ZMEMQB ,P-ADJ .SYNS <- <PTSIZE .SYNS> 1>>>>>
+	<RFALSE>)
+       (<AND <NOT <0? ,P-GWIMBIT>> <NOT <FSET? .OBJ ,P-GWIMBIT>>>
+	<RFALSE>)>
+ <RTRUE>>

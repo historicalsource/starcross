@@ -25,6 +25,7 @@
 <CONSTANT M-OBJDESC 5>
 
 <ROUTINE GO () 
+	 <PUTB ,P-LEXV 0 59>
 ;"put interrupts on clock chain"
 	 ;<QUEUE I-LAMP 200>
 	 <ENABLE <QUEUE I-NIGHT 128>>
@@ -126,8 +127,10 @@ be the break you've been waiting for.
 	    <COND (<==? .V ,M-FATAL> <SETG P-CONT <>>)>)
 	   (T
 	    <SETG P-CONT <>>)>
-     <COND (,P-WON
-	    <COND (<VERB? TELL BRIEF SUPER-BRIEF VERBOSE SAVE SCORE> T)
+     <COND (<NOT ,NOT-AGAIN> <RETURN .V>)
+	   (,P-WON
+	    <COND (<VERB? TELL BRIEF SUPER-BRIEF VERBOSE SAVE VERSION
+			  QUIT RESTART SCORE SCRIPT UNSCRIPT RESTORE> T)
 		  (T <SET V <CLOCKER>>)>)>>>
  
 <GLOBAL L-PRSA <>>  

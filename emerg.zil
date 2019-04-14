@@ -20,34 +20,32 @@ computer starts up." CR>
 		       <COND (<AND <IN? ,CARD ,SLOT> <NOT ,FRIED?>>
 			      <COND (,GOT-KEY?
 				     <TELL
-"The main display blinks once and then displays the word \"Ready\"." CR>)
+"The main display blinks and displays the word \"Ready\"." CR>)
 				    (ELSE
 				     <SETG GOT-KEY? T>
 				     <MOVE ,GOLD-KEY ,HERE>
 				     <FCLEAR ,ENUNCIATOR ,INVISIBLE>
 				     <TELL
-"The main display blinks twice, a bell rings, and out of the output
-hopper onto the floor is extruded a gold rod! A moment later, a
-previously unseen enunciator panel comes on." CR>
+"The main display blinks twice, a bell rings, and a gold rod falls from the
+output hopper onto the floor! A moment later, a previously unseen enunciator
+panel comes on." CR>
 				     <PERFORM ,V?EXAMINE ,ENUNCIATOR>
 				     <RTRUE>)>)
 			     (ELSE
 			      <TELL
-"On the main display lights blink insistently and the word \"Fault\"
-appears." CR>)>)>)
+"Lights blink on the main display and the word \"Fault\" appears." CR>)>)>)
 	       (<VERB? LAMP-OFF>
 		<SETG SWITCH-ON? <>>
 		<FSET ,ENUNCIATOR ,INVISIBLE>
-		<TELL
-"The computer is off." CR>)>>
+		<TELL "The computer is off." CR>)>>
 
 <ROUTINE COMPUTER-ROOM-FCN (RARG)
 	 <COND (<==? .RARG ,M-LOOK>
 		<TELL
 "This is the main computer room. The builders of this ship were obviously
-still wedded to large mainframes: this one stretches off in all directions
-and is thirty meters high. There is an overlarge switch at about eye-level
-and an access panel below it, which is ">
+still wedded to large mainframes: this one fills the room and is thirty
+meters high. There is an overlarge switch at about eye-level and an access
+panel below it, which is ">
 		<COND (<FSET? ,PANEL ,OPENBIT>
 		       <TELL "open">)
 		      (ELSE <TELL "closed">)>
@@ -56,7 +54,7 @@ and an access panel below it, which is ">
 		      (ELSE <TELL "off." CR>)>
 		
 		<COND (,FRIED? <TELL
-"There is a strong smell of burning components here." CR>)>
+"There is a strong smell of burning components." CR>)>
 		<RTRUE>)>>
 
 <OBJECT ENUNCIATOR
@@ -72,15 +70,15 @@ and an access panel below it, which is ">
 	 <COND (<VERB? EXAMINE>
 		<COND (,SWITCH-ON?
 		       <TELL
-"On the left are three banks of four colored lights: red, yellow, green, and
+"The panel has three banks of four colored lights: red, yellow, green, and
 blue. The first is labelled with a symbol of the emission of rays: of the
 lights underneath, the red one is flashing and the yellow one is brightly
-lit. The second column is labelled with a stylized docking port and the third
-with an airlock. The only indications on these two banks are the yellow ones,
-the first of which is brightly lit and the other of which is flashing. On the
-right are six other lights, each bearing a stylized picture. The first four,
-all dark, represent navigation, engine, library, and defenses. A fifth,
-bearing the picture of a cage, is brightly lit. The sixth is "
+lit. The second bank is labelled with a stylized docking port and the third
+with an airlock. Of these two banks, the first yellow one is brightly lit and
+the other yellow one is flashing. The panel also contains six other lights,
+each bearing a stylized picture. The first four, all dark, represent
+navigation, engine, library, and defenses. A fifth, picturing a cage, is
+brightly lit. The sixth is "
 <GET ,AIR-FLASH ,AIR-COUNT> ". It" ,REPAIR-PANEL CR>)
 		      (ELSE <TELL "The panel is dark." CR>)>)>>
 
@@ -108,10 +106,9 @@ wavy lines.">
 <ROUTINE REPAIR-ROOM-FCN (RARG)
 	 <COND (<==? .RARG ,M-LOOK>
 		<TELL
-"This is a bright room taken up by two large pieces of machinery. On the
-leftmost one is a symbol depicting the emission of rays and beside it a
-yellow slot. The other machine" ,REPAIR-PANEL " Beside it are three diagrams;
-under each one is a
+"This room is taken up by two large pieces of machinery. The leftmost has a
+symbol depicting the emission of rays beside a yellow slot. The other
+machine" ,REPAIR-PANEL " Beside it are three diagrams; under each one is a
 red slot. The first diagram shows four single dots equally spaced around a
 six-dot cluster. The second shows two eight-dot clusters in close proximity.
 The third has three single dots equally spaced around a seven-dot cluster.
@@ -137,7 +134,7 @@ The only exit is up some stairs." CR>)>>
 		      (ELSE <WONT-FIT>)>)>>
 
 <ROUTINE WONT-FIT ()
-	 <TELL "The " D ,PRSO " doesn't fit." CR>>
+	 <TELL "The " D ,PRSO " doesn't fit in the " D ,PRSI "." CR>>
 
 <OBJECT RED-SLOT
 	(IN REPAIR-ROOM)
@@ -160,7 +157,7 @@ The only exit is up some stairs." CR>)>>
 		       <REMOVE ,RED-KEY>
 		       <RIGHT-KEY>
 		       <TELL
-" You hear the subdued hum of some machinery coming to life." CR>
+" You hear a subdued hum of machinery coming to life." CR>
 		       <COND (<==? .NUM 2>
 			      <ENABLE <QUEUE I-FRESH-AIR 30>>
 			      <DISABLE <INT I-BAD-AIR>>)
@@ -201,17 +198,18 @@ The only exit is up some stairs." CR>)>>
 		<COND (<NOT ,IN-ARTIFACT?>
 		       <ENABLE <QUEUE I-POISON-AIR 1>>)
 		      (,SUIT-ON?
-		       <JIGS-UP
-"Suddenly, you notice everything around you going dark, as though
-the artifact was shutting down. The lights are dimming everywhere,
-and a faint thrumming vibration stops; one you didn't even notice
-until it ceased.">)
+		       <JIGS-UP ,STUPID-AIRGONE-MESSAGE>)
 		      (T <JIGS-UP
 "You are overcome by noxious gases and slump to the floor, dead.">)>)
 	       (T
 		<COND (<AND <NOT ,SUIT-ON?> ,IN-ARTIFACT?>
 		       <DESCRIBE-AIR "The air here has become ">)>
 		<QUEUE I-POISON-AIR 30>)>>
+
+<GLOBAL STUPID-AIRGONE-MESSAGE 
+"Suddenly, everything begins going dark, as though the artifact was
+shutting down. A thrumming vibration stops; one you didn't even notice
+until it ceased.">
 
 <ROUTINE I-BAD-AIR ()
 	 <COND (<G? <SETG AIR-COUNT <+ ,AIR-COUNT 1>> 3>
@@ -220,13 +218,9 @@ until it ceased.">)
 		       <ENABLE <QUEUE I-BAD-AIR 1>>)
 		      (<NOT ,SUIT-ON?>
 		       <JIGS-UP
-"You gasp for air, but there is none left, and slump to the ground, dead.">)
+"You gasp for air, but there is none left, and slump to the floor, dead.">)
 		      (T
-		       <JIGS-UP
-"Suddenly, you notice everything around you going dark, as though
-the artifact was shutting down. The lights are dimming everywhere,
-and a faint thrumming vibration stops; one you didn't even notice
-until it ceased.">)>)
+		       <JIGS-UP ,STUPID-AIRGONE-MESSAGE>)>)
 	       (T
 		<COND (<AND <NOT ,SUIT-ON?> ,IN-ARTIFACT?>
 		       <DESCRIBE-AIR "You notice that the air has become ">)>
@@ -238,7 +232,7 @@ until it ceased.">)>)
 	 <COND (<==? ,POISON-COUNT 4>
 		<COND (<==? ,AIR-COUNT 4>
 		       <JIGS-UP
-"You gasp for air, but there is none left, and slump to the ground, dead.">)
+"You gasp for air, but there is none left, and slump to the floor, dead.">)
 		      (T
 		       <JIGS-UP
 "You are overcome by noxious gases and slump to the floor, dead.">)>)

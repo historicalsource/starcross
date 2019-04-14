@@ -1,0 +1,189 @@
+			THE SHIP FROM THE STARS
+			      Dave Lebling
+			     November, 1981
+
+
+-Synopsis-
+
+Space-based tracking radars discover a small asteroid (or huge
+starship) hurtling into the solar system.  Although they don't know it,
+the ship is an enormous gift and test sent by an advanced race to the
+primitive cultures of the galactic arm.  The ship contains secrets which
+wish to be discovered, but only by a race advanced enough (and clever
+enough and lucky enough) to penetrate its mysteries.
+
+The ultimate goal is to gain control of the ship's instruments and
+thereby bring it into orbit around the Sun, so that it can be studied
+and exploited.  The radar tracking makes clear that there is only a
+limited amount of time available, as the orbit takes it through the
+solar system almost perpendicular to the plane of the ecliptic.
+
+Further, control of the ship is vested in "magic" devices (keys, if you
+will) which collectively activate the main control panel.  Each key is
+obtained by solving a problem.
+
+Other attempts have been made to stop the ship: our system is not the
+first it has visited.  Relics of those attempts, including adventurers
+or their descendants, remain aboard.  On the other hand, they may know
+about how to obtain keys or even have some themselves.
+
+The player is in the role of the "lucky" asteroid miner who is the only
+earth-based ship with an orbit close enough to the cylinder's path to
+have a chance to intercept it.
+
+-Ship Layout-
+
+The ship is an enormous cylinder (roughly -- it was obviously a hacked
+up asteroid).  At one end are the engines, at the other the control
+room.  Much of the interior is airspace.  Around the rim are four
+docking ports, three of which are occupied when the Earth ship arrives! 
+Main gangways run the length of the ship, main lifts near the docking
+ports run from the outside rim to the airspace.  There are ring corridors
+leading around the ship as well. The engine end of the airspace supports a
+jungle environment which replenishes the air supply.  The center of the
+jungle end sports the drive bubble (engine room), which is not visible
+from the ground because of the jungle.  The center of the other end
+sports the control bubble.  There is a fence midway to keep the jungle
+at its end.
+
+-Docking Ports-
+
+There are four of these.  Two are already occupied by the ships of
+previous adventurers, and one was destroyed (almost) by the blast-off of
+a third.  Each port has flexible grapples which catch incoming ships,
+deccelerate them and hold them.  Nearby is a port with airlock which is
+opened by pushing the "earth" symbol in a stylized solar system.  In the
+airlock is found the first key and a device which allows limited use of
+the ship's computer.
+
+-Keys-
+
+The keys are translucent crystals of various colors.  To make the test
+fair, one is found in your airlock.  Several others have already been
+found by previous adventurers, and some of these are same color as your
+airlock one (they crumble to dust when confronted with yours).
+
+-Translator-
+
+Ship has been listening to radio/TV broadcasts from Earth (that's how it
+decided to come here).  Translator connects to central computer, which
+watches and observes all goings on.  Doesn't work perfectly though, and
+it's not omniscient.  Will answer some questions, but not all.  The
+translator is somewhat fragile, and can get broken in a fight, for
+example.
+
+-Jungle-
+
+You can gain access to the drive bubble by climbing trees (bubble is
+invisible from floor).  No trees at control bubble end.  Drive bubble
+will open into weightless area, but you can't push off with enough
+impulse to get to control end.  Jump plus assist from several blasts
+from the zap gun will be enough to get there (note that you thus can't
+overuse the zap gun, as it has limited charges.  One of the keys
+opens the control bubble.
+
+-Aliens-
+
+There were three previous attempts to take over the ship:
+
+1) The Immortal.  A hugely long-lived alien, he still lives in his ship.
+He looks like an enormous spider (but he isn't -- remember the square-
+cube law).  The intent is that he should look fierce and nasty, but not
+be. He knows a lot, may give you information and a key.
+Profoundly bored, he has been here a long time.  You should give him
+your entertainment cassettes.  He has a translator of his own.
+
+2) The Savages.  These are descendents of a larger expedition which
+contained both sexes.  The chieftain wears the ancient ruins of a
+spacesuit, carries a key as a token.  If you are in a spacesuit as well
+he will trade the key for your much more interesting spacesuit.  You can
+also blow it and get him or his tribe to fight you.  Zap gun may destroy
+key. He will also lead you into the ship in which his ancestors arrived,
+and there you can find another key!  This ship is on the other side of
+a more-or-less unmappable maze; unmappable because the young of this
+species will steal anything you drop to aid in mapping.
+
+3) The Departed.  This alien tried to get away after finding at least
+one key.  He didn't make it.  The corpse is tethered to the ship. 
+Perhaps he was waiting for another ship to take him off, or his companions
+abandoned him.  He has a key.
+
+-Teleportation Disks-
+
+These flip to the other if something touches them.  They are activated
+by pressure (e.g., dropping them) on one side (the red side). Whatever
+is within their range is transported.  They are found hanging
+side-by-side on the wall near the Force Shield.
+
+-Force Shield-
+
+Has four settings, lowest of which reveals a key imbedded in the field.
+Place something on the shield at a middle setting, then put a T.D. on
+the floor beneath.  Then set the shield to the highest setting, which
+leaves the object unsupported, and it drops onto the T.D., transporting
+it and the key to the other disk.
+
+-Maintenance Mice-
+
+These carry off any object left on the floor.  Can be found in the
+Maintenance Center.  They go in and out of holes in walls, so you can't
+follow them.  You can use the Teleportation Disks to get into the
+maintenance center, though!  Just leave one somewhere and a mouse will
+pick it up sooner or later.
+
+-Zoo-
+
+Most of the animals have died, escaped, or been released.  A hive of
+rat-ants (name is self-explanatory) remains.  They build nests out of
+junk, including a key they found somewhere.  If you break the nest,
+they will rebuild it further away from you, but you can get the key
+before they reuse it.
+
+-Computer Room-
+
+A non-working computer is here, which you can reactivate by plugging
+a replacement board in; but be sure to power it off first or you fry
+the board. The computer will extrude a key if you do the right thing
+here.
+
+-Observation Deck-
+
+A clear key here produces a prism which you can see before you see the
+key itself.
+
+-Weapons Deck-
+
+You find a zap gun here, which has an enormous recoil to it (you can
+use it to propel you to the control room).  It has only a certain number
+of charges, of course.  It also has a key in its barrel which tints the
+blast its color.  None of the other weapons works.
+
+-Engine Room-
+
+-Maintenance Center-
+
+Maintenance mice return here, and they drop anything they've picked up
+that might not be real trash.  There is a rather full bin of such stuff,
+since no one has checked it recently.  If you root around long enough
+you will find a key, plus anything else you may have dropped that the mice
+recovered.
+
+-Dropshaft-
+
+Most dropshafts (air conditioning?) are covered with an invulnerable
+mesh.  One is not.  You must stop at each level going out you will
+splat.
+
+-Control Bubble-
+
+Something nasty lives in it.  The normal exits are blocked.
+
+-Control Panel-
+
+This is very complicated.  Basically it a control panel for illiterates,
+all symbolic.  There is a key for each control without which the control
+won't activate.  The labelling is not even there until the keys are
+inserted.  There are View Select controls, Speed select controls, a
+Target Select board and viewer, and a Course Select board.  There is
+also an execute key.  You have to figure out how to direct the ship into
+a circular Earth orbit...

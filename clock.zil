@@ -1,3 +1,7 @@
+"CLOCK for
+			      STARCROSS
+	(c) Copyright 1981 Infocom, Inc.  All Rights Reserved.
+"
 
 <CONSTANT C-TABLELEN 180>
 

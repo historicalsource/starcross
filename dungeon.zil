@@ -15,7 +15,7 @@
 	(FLAGS RMUNGBIT INVISIBLE TOUCHBIT SURFACEBIT TRYTAKEBIT
 	       SEARCHBIT TRANSBIT WEARBIT)>
 
-<OBJECT LOCAL-GLOBALS (IN GLOBAL-OBJECTS) (SYNONYM MGCKJK)>
+<OBJECT LOCAL-GLOBALS (IN GLOBAL-OBJECTS) (SYNONYM ZZMGCK)>
 ;"Yes, this synonym for LOCAL-GLOBALS needs to exist... sigh"
 
 <OBJECT ROOMS>
@@ -134,7 +134,7 @@ Constructed in 2178, Luna City Docks|
 <OBJECT ALARM
 	(IN LOCAL-GLOBALS)
 	(SYNONYM ALARM BELL)
-	(DESC "mass-detector alarm")
+	(DESC "alarm")
 	(FLAGS NDESCBIT)
 	(ACTION ALARM-FCN)>
 
@@ -171,7 +171,7 @@ Constructed in 2178, Luna City Docks|
 	(TEXT
 "The output shows major mass concentrations in the vicinity, each with
 a code designation and the appropriate R, Theta, and Phi to describe its
-location relative to your course.")>
+location relative to yours.")>
 
 <OBJECT COURSE
 	(IN GLOBAL-OBJECTS)
@@ -356,7 +356,7 @@ location relative to your course.")>
 
 <OBJECT CONTROLS
 	(IN LOCAL-GLOBALS)
-	(SYNONYM CONTROL PANEL CONSOLE INSTRUMENTS)
+	(SYNONYM CONTROL PANEL CONSOLE)
 	(DESC "control")
 	(FLAGS NDESCBIT)
 	(ACTION CONTROLS-FCN)>
@@ -371,7 +371,7 @@ location relative to your course.")>
 
 <ROOM SPACESHIP-QUARTERS
       (IN ROOMS)
-      (LDESC "This cubicle is your rather spartan living quarters,
+      (LDESC "This nook is your spartan living quarters,
 containing only a bunk and a bureau. The only exit is to starboard.")
       (DESC "Living Quarters")
       (EAST TO SPACESHIP-BRIDGE)
@@ -399,7 +399,7 @@ containing only a bunk and a bureau. The only exit is to starboard.")
 	(IN SPACESHIP-STORES)
 	(SYNONYM SPACES SUIT)
 	(ADJECTIVE SPACE PRESSURE MY GOOD)
-	(FDESC "Hanging on the rack is your space suit.")
+	(FDESC "Hanging on a rack is your space suit.")
 	(DESC "space suit")
 	(FLAGS TAKEBIT TRYTAKEBIT)
 	(SIZE 20)
@@ -481,11 +481,33 @@ containing only a bunk and a bureau. The only exit is to starboard.")
 <OBJECT COMPUTER
 	(IN SPACESHIP-BRIDGE)
 	(SYNONYM COMPUTER POWER)
-	(ADJECTIVE NAVIGATIONAL)
+	(ADJECTIVE NAVIGATIONAL FROBOZZCO)
 	(DESC "computer")
 	(FLAGS NDESCBIT VICBIT)
 	(ACTION COMPUTER-FCN)>
 	
+<OBJECT INSTRUCTIONS
+	(IN SPACESHIP-BRIDGE)
+	(SYNONYM SHEET INSTRUCTIONS PAPER)
+	(ADJECTIVE FADED)
+	(FDESC
+"Taped to the wall is a slightly faded instruction sheet for the computer.")
+	(DESC "instruction sheet")
+	(FLAGS READBIT TAKEBIT)
+	(TEXT
+
+"|
+\"Your Frobozzco FB-69105 Computer|
+|
+For your safety, this voice-activated computer will not respond unless
+directly addressed by the operator. Prefix all commands with the word
+'computer,' as in 'Computer, Set course for Mars.'  Navigational
+commands may also be given in terms of the R, theta, and phi of the
+destination, as in 'Computer, R is 100. Theta is 200. Phi is 300.'
+Following these instructions will ensure full satisfaction from your new
+Frobozzco Computer.\"|
+")>
+
 <OBJECT TAPE-PLAYER
 	(IN SPACESHIP-QUARTERS)
 	(SYNONYM RECORDER PLAYER VCR LIBRARY)
@@ -514,7 +536,7 @@ containing only a bunk and a bureau. The only exit is to starboard.")
 <ROOM RED-LOCK
       (IN ROOMS)
       (DESC "Red Airlock")
-      (FLAGS RLANDBIT ONBIT)
+      (FLAGS RLANDBIT ONBIT SPACEBIT)
       (OUT TO RED-DOCK IF RED-OUTER IS OPEN)
       (DOWN TO RED-DOCK IF RED-OUTER IS OPEN)
       (UP TO RED-THREE IF RED-INNER IS OPEN)
@@ -544,10 +566,10 @@ containing only a bunk and a bureau. The only exit is to starboard.")
 	(ADJECTIVE METAL SILVER)
 	(DESC "metal relief")
 	(LDESC
-"A round metal sculpture or relief covers part of the airlock door. You notice
-that it is made up of thousands of tiny hexagonal columns which extend various
-lengths from the surface, making a three-dimensional representation. You will
-have to examine it more closely to see the details.")
+"A round metal sculpture or relief covers part of the airlock door. It is
+made up of thousands of tiny hexagonal columns which extend various lengths
+from the surface, making a three-dimensional representation. You can examine
+it more closely to see the details.")
 	(FLAGS OPENBIT CONTBIT SEARCHBIT)
 	(ACTION RELIEF-FCN)>
 
@@ -602,7 +624,7 @@ spaceship is aft of here. There is a hook by the airlock.")
       (IN ROOMS)
       (DESC "Bubbles")
       (LDESC
-"This is a series of large plastic bubbles connecting the blue airlock
+"This is a series of plastic bubbles connecting the blue airlock
 with a spherical spaceship docked aft of here. The bubbles are made of
 a thick material which is nonetheless transparent.")
       (NORTH TO BLUE-DOCK)
@@ -616,12 +638,11 @@ a thick material which is nonetheless transparent.")
       (IN ROOMS)
       (DESC "Spherical Ship")
       (LDESC
-"You are within a huge bubble that is somehow transparent from this
-side. The interior is crisscrossed with wire webbing, so that a
-sufficiently agile creature could move around using only the wires. Many
-objects are stuck in the wires in various out-of-reach places. The whole
-impression is of a rather untidy spiderweb. The connection to the
-artifact is at the forward end of the sphere.")
+"You are within a huge bubble, transparent from this side. The interior is
+crisscrossed with wire webbing, so that an agile creature could move around
+using only the wires. Objects are stuck in the wires in various out-of-reach
+places. The whole impression is of a rather untidy spiderweb. The connection
+to the artifact is at the forward end of the sphere.")
       (NORTH TO BUBBLE-ROOM)
       (OUT TO BUBBLE-ROOM)
       (ACTION SPHERE-SHIP-FCN)
@@ -634,11 +655,11 @@ artifact is at the forward end of the sphere.")
 	(DESC "giant spider")
 	(FLAGS VILLAIN OPENBIT CONTBIT VICBIT SEARCHBIT)
 	(LDESC
-"Crouched in the center of the sphere, where all the wires converge, is a
-creature which resembles a giant spider. A closer look reveals that it is not
+"Crouched in the center of the sphere, where the wires converge, is a
+creature resembling a giant spider. A closer look reveals that it is not
 an insect, but rather a multi-legged, endoskeletal mammal. It has huge eyes
-and impressive grinding teeth. It grips the wires with many tiny fingers. As
-you watch it, it gazes back with almost hypnotic intensity.")
+and impressive grinding teeth. It grips the wires with many tiny fingers, and
+gazes at you with almost hypnotic intensity.")
 	(ACTION SPIDER-FCN)>
 
 <OBJECT YELLOW-KEY
@@ -727,11 +748,11 @@ tentacle housings have been destroyed. To starboard is the airlock dome.")
 	(SYNONYM ALIEN REPTILE)
 	(ADJECTIVE SCORCHED)
 	(LDESC
-"Entangled in the wreckage is the scorched body of a creature which appears
-to have been a large reptile, almost a miniature allosaurus. It is clad in
-the remains of a space suit.")
+"Entangled in the wreckage is the scorched body of a creature resembling a
+large reptile, almost a miniature allosaurus, clad in the remains of a space
+suit.")
 	(DESC "scorched alien")
-	(FLAGS VILLAIN OPENBIT CONTBIT VICBIT SEARCHBIT)>
+	(FLAGS VILLAIN OPENBIT CONTBIT SEARCHBIT)>
 
 <OBJECT PINK-KEY
 	(IN SCORCHED-ALIEN)
@@ -852,7 +873,7 @@ corridor at right angles. The plant boxes here are empty.")
 <ROOM RED-FIVE
       (IN ROOMS)
       (LDESC
-"This the end of the red hall where it T's with the aft-most ring corridor.
+"This is the end of the red hall where it T's with the aft-most ring corridor.
 The lighting is poor and the plant boxes here are empty and battered.")
       (DESC "Red Hall")
       (NORTH TO RED-FOUR)
@@ -899,8 +920,8 @@ port. The main corridor continues fore and aft.")
 	(SYNONYM FRAGMENT PIECE)
 	(ADJECTIVE SMOKED BLACK GLASS VISOR)
 	(FDESC
-"A large fragment of black smoked glass from the visor of the alien chief's
-helmet lies on the floor.")
+"A large fragment of black smoked glass from the chief's
+helmet visor lies on the floor.")
 	(DESC "black visor fragment")
 	(FLAGS TAKEBIT TRANSBIT)
 	(SIZE 2)>
@@ -934,7 +955,7 @@ in the light path.")
 	(ADJECTIVE LASER LIGHT)
 	(DESC "light beam")
 	(ACTION LASER-BEAM-FCN)
-	(FLAGS NDESCBIT VICBIT)>
+	(FLAGS NDESCBIT VILLAIN)>
 
 <OBJECT MODEL
 	(IN OBSERVATORY)
@@ -1115,11 +1136,10 @@ starboard.")
 <ROOM VILLAGE
       (IN ROOMS)
       (LDESC
-"This section of the hall has been made into an encampment, with primitive
-huts of various sizes filling the passage. They are so close they almost form
-a single large structure with many small entrances and exits. Many aliens are
-milling about, of all sizes and colors of fur. The only way to continue down
-the corridor is through the warren.")
+"This section of the hall is filled with primitive huts of various sizes.
+They are so close they almost form a single large warren with many entrances.
+The only way to continue down the corridor is through this warren. Many aliens
+are milling about, of all sizes and colors of fur.")
       (DESC "Village Center")
       (EAST PER ENTER-WARREN)
       (WEST TO VILLAGE-NW-EDGE)
@@ -1135,10 +1155,10 @@ the corridor is through the warren.")
 <ROOM MAZE
       (IN ROOMS)
       (LDESC
-"This is an earth and reed burrow within the warren. There are many
-aliens here, going about their business. Some of the littler ones
-stare at you and make funny noises. There are passages all over the
-place, and a constant traffic in and out.")
+"This is an earth and reed burrow within the warren. There are many aliens
+here, going about their business. The younger ones stare at you and make
+funny noises. There are passages all over the place, and a constant traffic
+in and out.")
       (DESC "In the Warren")
       (UP TO MAZE)
       (DOWN TO MAZE)
@@ -1155,14 +1175,12 @@ place, and a constant traffic in and out.")
 <ROOM GREEN-THREE
       (IN ROOMS)
       (LDESC
-
 "This burrow is deep within the warren and the aliens seem to avoid it.
 An exit to port leads back into the warren. The walls are covered with
 crude but vibrant paintings depicting a huge spider, a gigantic mouse,
-man-sized lizards, and in the center, in ochre pigment, a being in a
-space suit. A close look reveals that this room is the center of the
-green hall's junction with the ring corridor. In fact, a ladder leads
-down to the green airlock.")
+man-sized lizards, and in the center, a being in a space suit. You realize
+that this room is the center of the green hall's junction with the ring
+corridor. In fact, a ladder leads down to the green airlock.")
       (DESC "Center of the Warren")
       (IN TO MAZE)
       (WEST TO MAZE)
@@ -1215,9 +1233,9 @@ built of mud and wood which completely blocks the corridor.")
 
 <OBJECT ALIENS
 	(IN LOCAL-GLOBALS)
-	(SYNONYM ALIENS ALIEN WEASEL HUNTER)
-	(ADJECTIVE GREY)
-	(DESC "weasel-like alien")
+	(SYNONYM ALIENS ALIEN WEASEL)
+	(ADJECTIVE GREY HUNTER TRIBESMAN)
+	(DESC "alien tribesmen")
 	(FLAGS VILLAIN VICBIT)
 	(ACTION ALIENS-FCN)>
 
@@ -1226,7 +1244,7 @@ built of mud and wood which completely blocks the corridor.")
 	(SYNONYM PALISADE WALL)
 	(ADJECTIVE MUD WOOD)
 	(DESC "palisade")
-	(FLAGS VICBIT CLIMBBIT)
+	(FLAGS VILLAIN CLIMBBIT)
 	(ACTION PALISADE-FCN)>
 
 <ROOM VILLAGE-N-EDGE
@@ -1328,7 +1346,7 @@ area for dirt and discarded junk.")
 	(SYNONYM MOUSE SWEEPER RECEPTACLE TRAY)
 	(ADJECTIVE MAINTENANCE)
 	(DESC "maintenance mouse")
-	(FLAGS CONTBIT SURFACEBIT OPENBIT TRANSBIT SEARCHBIT)
+	(FLAGS VEHBIT CONTBIT SURFACEBIT OPENBIT TRANSBIT SEARCHBIT)
 	(DESCFCN MOUSE-FCN)
 	(ACTION MOUSE-FCN)
 	(CONTFCN MOUSE-CONT)
@@ -1451,7 +1469,7 @@ area for dirt and discarded junk.")
 	(ADJECTIVE ENERGY)
 	(DESC "beam of energy")
 	(ACTION BEAM-FCN)
-	(FLAGS NDESCBIT VICBIT)>
+	(FLAGS NDESCBIT VILLAIN)>
 
 <OBJECT BLUE-KEY
 	(IN FORCE-FIELD-1)
@@ -1479,19 +1497,19 @@ damaged to port. The illumination dims to starboard.")
       (LDESC
 "This is the garage for Maintenance Mice. There are several stalls in
 which non-functional mice are rusting away. Other stalls are empty.
-There is a hole through which trash could be dumped, and a large bin nearby.
+There is a chute into which trash could be dumped, and a large bin nearby.
 A maintenance-mouse-sized door is in the forward wall.")
       (NORTH TO BLUE-RED-FOUR)
       (OUT TO BLUE-RED-FOUR)
       (FLAGS RLANDBIT ONBIT)
-      (PSEUDO "HOLE" HOLE-PSEUDO "DOOR" DOOR-PSEUDO)>
+      (PSEUDO "CHUTE" HOLE-PSEUDO "DOOR" DOOR-PSEUDO)>
 
 <OBJECT TRASH-BIN
 	(IN GARAGE)
 	(SYNONYM BIN)
 	(ADJECTIVE TRASH JUNK)
 	(DESC "trash bin")
-	(FLAGS RLANDBIT OPENBIT CONTBIT)
+	(FLAGS RLANDBIT OPENBIT CONTBIT SEARCHBIT)
 	(LDESC
 "There is a trash bin full of junk of all sorts here. Someone appears to have
 been dumping things for years (decades? centuries?) and never cleaning them
@@ -1516,15 +1534,13 @@ out.")
       (FLAGS RLANDBIT ONBIT)
       (LDESC
 "This was the control room of the ship which originally carried the
-now-primitive aliens to the artifact. They must have been at about the
-human level of technology, as the controls and style of the room are
-familiar. The control panel was obviously destroyed by a fire or explosion
-long ago, although the lights here still glow dimly.|
+now-primitive aliens to the artifact. The control panel was obviously
+destroyed by a fire or explosion long ago, although the lights here still
+glow dimly.|
 Outside you can see the surface of the artifact. Gazing longingly at that
-view are the empty eyesockets of a skeleton; the skeleton of one of the
-aliens. It is dressed in the shreds of a space suit and sitting in the
-control couch. Scattered around the couch are fresh offerings of fruit and
-vegetables.")
+view are the empty eyesockets of a skeleton, the skeleton of an alien weasel.
+It is dressed in the shreds of a space suit and sitting in the control couch.
+Scattered around the couch are fresh offerings of fruit and vegetables.")
       (SOUTH TO CARGO-ROOM)
       (GLOBAL COUCH WINDOW CONTROLS TOTEMS)>
 
@@ -1634,7 +1650,7 @@ obviously underestimated their nastiness.")
 	(DESC "chewed sign")
 	(FLAGS NDESCBIT READBIT)
 	(TEXT
-"The sign is a liquid crystal display, and even more oddly, is in English:|
+"The sign, a liquid crystal display, is oddly in English:|
 |
 \"     Common Grues (Grue Vulgaris)|
 |
@@ -1643,7 +1659,7 @@ forgotten planet, is here exhibited for your pleasure in a typical family
 group. Note particularly the slavering fangs which reach such impressive
 size in the adults. Feeding the grues is not recommended.\"")>
 
-<OBJECT GRUE	;"was GRUE"
+<OBJECT GRUE
 	(IN GLOBAL-OBJECTS)
 	(SYNONYM GRUE)
 	(ADJECTIVE LURKING SINISTER HUNGRY SILENT)
@@ -1664,7 +1680,7 @@ size in the adults. Feeding the grues is not recommended.\"")>
 	(SYNONYM NEST)
 	(ADJECTIVE MUD)
 	(DESC "nest")
-	(FLAGS NDESCBIT OPENBIT CONTBIT VICBIT VILLAIN SEARCHBIT)
+	(FLAGS NDESCBIT OPENBIT CONTBIT VILLAIN SEARCHBIT)
 	(ACTION NEST-FCN)
 	(CONTFCN NEST-CONT)
 	(CAPACITY 1000)>
@@ -1673,7 +1689,7 @@ size in the adults. Feeding the grues is not recommended.\"")>
 	(SYNONYM NEST)
 	(ADJECTIVE SMASHED)
 	(DESC "smashed nest")
-	(FLAGS NDESCBIT OPENBIT CONTBIT VICBIT VILLAIN SEARCHBIT)
+	(FLAGS NDESCBIT OPENBIT CONTBIT VILLAIN SEARCHBIT)
 	(ACTION NEST-FCN)
 	(CONTFCN SMASHED-NEST-CONT)
 	(CAPACITY 1000)>
@@ -1790,7 +1806,7 @@ fully charged.")
       (IN ROOMS)
       (DESC "Weapons Deck")
       (LDESC
-"This was the armory of the artifact. A massive bulkhead melted and burned
+"This was the armory of the artifact. A massive bulkhead has been burned
 away, giving free access to the weaponry. Unfortunately, it appears that the
 vast stock of futuristic armaments has been mostly destroyed. Gigantic
 projectors are scorched and shattered, strange battle armor is reduced to
@@ -1830,11 +1846,11 @@ the hatch now, and the way is open.")
       (IN ROOMS)
       (DESC "Base of Tree")
       (LDESC
-"You are in a primeval forest, standing at the base of a giant tree.
-The trunk is thick, perhaps 40 meters in diameter, and the height is
-incredible. The forest is very thick, so you can't see exactly how tall
-it is, but extending all the way to the axis isn't out of the question.
-The bark is so rough that climbing would be no problem.")
+"You are in a primeval forest, near the base of a giant tree. The trunk is
+thick, perhaps 40 meters in diameter, and the height is incredible. The
+forest is dense, so you can't see exactly how tall it is, but extending all
+the way to the axis isn't out of the question. The bark is so rough that
+climbing would be no problem.")
       (UP PER UP-A-TREE-EXIT)
       (NORTH TO SCRUB-2)
       (EAST TO FOREST)

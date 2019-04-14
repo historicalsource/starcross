@@ -1,4 +1,4 @@
-"VERBS for
+ "VERBS for
 			   Interlogic SF Game
        (c) Copyright 1981,1982 Infocom, Inc.  All Rights Reserved
 "
@@ -53,7 +53,7 @@
 	 <SET V? <OR .LOOK? ,VERBOSE>>
 	 <COND (<NOT ,LIT>
 		<TELL
-"It is pitch black.  You are likely to be eaten by a grue." CR>
+"It is pitch black. You are likely to be eaten by a grue." CR>
 		<RETURN <>>)>
 	 <COND (<NOT <FSET? ,HERE ,TOUCHBIT>>
 		<FSET ,HERE ,TOUCHBIT>
@@ -250,9 +250,10 @@ long description (fdesc or ldesc), otherwise will print short."
 
 <ROUTINE V-VERSION ("AUX" (CNT 17))
 	 <TELL
-"STARCROSS: INTERLOGIC Science Fiction|
+"STARCROSS|
+Infocom interactive fiction - a science-fiction story|
 Copyright (c) 1982 by Infocom, Inc.  All rights reserved.|
-STARCROSS and INTERLOGIC are trademarks of Infocom, Inc.|
+STARCROSS is a registered trademark of Infocom, Inc.|
 Release ">
 	 <PRINTN <BAND <GET 0 1> *3777*>>
 	 <TELL " / Serial number ">
@@ -263,7 +264,7 @@ Release ">
 			<PRINTC <GETB 0 .CNT>>)>>
 	 <CRLF>>
 
-<ROUTINE V-AGAIN ("AUX" OBJ)
+;<ROUTINE V-AGAIN ("AUX" OBJ)
 	 <COND (<==? ,L-PRSA ,V?WALK>
 		<DO-WALK ,L-PRSO>)
 	       (T
@@ -278,6 +279,32 @@ Release ">
 		      (T
 		       <PERFORM ,L-PRSA ,L-PRSO ,L-PRSI>)>)>>
 
+;"Hopefully improved AGAIN"
+<ROUTINE V-AGAIN ("AUX" CONT LEXV INBUF V)
+	 <SET LEXV <TABLE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+		    	  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+		    	  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0>>
+	 <SET INBUF <TABLE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+		    	   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+		    	   0 0 0 0 0 0 0 0 0 0>>
+	 <COND (<0? ,P-LEN> <SET CONT <>>)
+	       (T <SET CONT ,P-CONT>)>
+	 <TABLE-COPY ,P-LEXV .LEXV 60 ;120>
+	 <TABLE-COPY ,P-INBUF .INBUF 50 ;100>
+	 <TABLE-COPY ,A-LEXV ,P-LEXV 60 ;120>
+	 <TABLE-COPY ,A-INBUF ,P-INBUF 50 ;100>
+	 <SETG P-CONT ,A-PTR>
+	 <SETG NOT-AGAIN <>>
+	 <SET V <MAIN-LOOP>>
+	 <SETG NOT-AGAIN 1>
+	 <SETG PRSA ,V?AGAIN>
+	 <COND (<==? .V ,M-FATAL>
+		<SETG P-CONT <>>)
+	       (T <SETG P-CONT .CONT>)>
+	 <TABLE-COPY .LEXV ,P-LEXV 60 ;120>
+	 <TABLE-COPY .INBUF ,P-INBUF 50 ;100>
+	 <RETURN .V>>
+
 \
 
 "SUBTITLE DEATH AND TRANSFIGURATION"
@@ -286,17 +313,7 @@ Release ">
 <GLOBAL LUCKY 1>
 
 <ROUTINE JIGS-UP (DESC "OPTIONAL" (PLAYER? <>))
- 	 #DECL ((DESC) STRING (PLAYER?) <OR ATOM FALSE>)
  	 <TELL .DESC CR>
-	 <COND (<NOT <==? ,ADVENTURER ,WINNER>>
-		<TELL "
-|    ****  The " D ,WINNER " has died  ****
-|
-|">
-		<REMOVE ,WINNER>
-		<SETG WINNER ,ADVENTURER>
-		<SETG HERE <LOC ,WINNER>>
-		<RFATAL>)>
 	 <PROG ()
 	       <SCORE-UPD -10>
 	       <TELL "
@@ -307,8 +324,8 @@ Release ">
 		 <COND (<==? ,DEATHS 4>
 			<COND (,DOCKED?
 			       <TELL
-"The expressionless voice seems despairing as it says \"Four failures.
-They would not be pleased. Such promising candidates, too. If only...\"
+"The expressionless voice seems despairing. \"Four failures. They would not
+be pleased. Such promising candidates, too. If only...\"
 The voice trails off into background hiss. Nothing more happens, ever." CR>)
 			      (ELSE
 			       <TELL
@@ -435,8 +452,6 @@ you have been given another chance." CR>)>
 			       <RETURN <GET .TBL <+ .CNT 1>>>)>)>>>
 
 <ROUTINE V-WALK ("AUX" PT PTS STR OBJ RM)
-	 #DECL ((PT) <OR FALSE TABLE> (PTS) FIX (STR) <OR STRING FALSE>
-		(OBJ) OBJECT (RM) <OR FALSE OBJECT>)
 	 <COND (<NOT ,P-WALK-DIR>
 		<PERFORM ,V?WALK-TO ,PRSO>
 		<RTRUE>)
@@ -542,7 +557,7 @@ you have been given another chance." CR>)>
 		;"This must go!  Chomping compiler strikes again"
 		<TELL
 "Oh, no. The " D .OBJ " slips from your arms while taking the "
-D ,PRSO " and both tumble to the ground." CR>
+D ,PRSO " and both tumble to the floor." CR>
 		<SET WLOC <LOC ,WINNER>>
 		<COND (<==? ,PRSO ,UNDER-GLOBE>
 		       <SETG UNDER-GLOBE <>>
@@ -665,7 +680,10 @@ D ,PRSO " and both tumble to the ground." CR>
 <ROUTINE V-THROW () <COND (<IDROP> <TELL "Thrown." CR>)>>
 
 <ROUTINE IDROP ()
-	 <COND (<NOT <HELD? ,PRSO>>
+	 <COND (<EQUAL? <LOC ,PRSO> ,GLOBAL-OBJECTS ,LOCAL-GLOBALS>
+		<TELL "You can't throw that." CR>
+		<RFALSE>)
+	       (<NOT <HELD? ,PRSO>>
 		<TELL "You're not carrying the " D ,PRSO "." CR>
 		<RFALSE>)
 	       (<AND <NOT <IN? ,PRSO ,WINNER>>
@@ -752,13 +770,19 @@ D ,PRSO " and both tumble to the ground." CR>
 			<COND (<NOT <SET CONT <NEXT? .CONT>>> <RETURN>)>>)>
 	 <+ .WT <GETP .OBJ ,P?SIZE>>>
 
+<GLOBAL COPR-NOTICE
+" a transcript of interaction with STARCROSS.|
+STARCROSS is a registered trademark of Infocom, Inc.|
+Copyright (c) 1982 Infocom, Inc.  All rights reserved.|">
+
 <ROUTINE V-SCRIPT ()
-	 <PUT 0 8 <BOR <GET 0 8> 1>>
-	 <TELL "Ok." CR>>
+	<PUT 0 8 <BOR <GET 0 8> 1>>
+	<TELL "Here begins" ,COPR-NOTICE CR>>
 
 <ROUTINE V-UNSCRIPT ()
-	 <PUT 0 8 <BAND <GET 0 8> -2>>
-	 <TELL "Ok." CR>>
+	<TELL "Here ends" ,COPR-NOTICE CR>
+	<PUT 0 8 <BAND <GET 0 8> -2>>
+	<RTRUE>>
 
 <ROUTINE PRE-MOVE
 	 ()
@@ -810,15 +834,10 @@ D ,PRSO " and both tumble to the ground." CR>
 <ROUTINE PRE-BOARD ("AUX" AV)
 	 <SET AV <LOC ,WINNER>>
 	 <COND (<FSET? ,PRSO ,VEHBIT>
-		<COND ;(<NOT <HERE?? ,PRSO>>
-		       <TELL "The "
-			     D
-			     ,PRSO
-			     " must be on the ground to be boarded." CR>)
-		      (<FSET? .AV ,VEHBIT>
+		<COND (<FSET? .AV ,VEHBIT>
 		       <TELL "You are already in it!" CR>)
 		      (T <RFALSE>)>)
-	       (<EQUAL? ,PRSO ,SPACESUIT ,JUNK-SPACESUIT>
+	       (<EQUAL? ,PRSO ,SPACESUIT ,JUNK-SPACESUIT ,MOUSE>
 		<RFALSE>)
 	       (T
 		<TELL "I suppose you have a theory on boarding a "
@@ -865,11 +884,6 @@ D ,PRSO " and both tumble to the ground." CR>
 	 <SCORE-OBJ .RM>
 	 <RTRUE>>
 
-<ROUTINE V-BACK
-	 ()
-	 <TELL
-"Sorry, my memory isn't that good. You'll have to give a direction." CR>>
-
 <ROUTINE V-DRINK ()
 	 <V-EAT>>
 
@@ -882,7 +896,7 @@ D ,PRSO " and both tumble to the ground." CR>
 <ROUTINE V-CURSES ()
 	 <COND (,PRSO
 		<COND (<FSET? ,PRSO ,VILLAIN>
-		       <TELL "Insults of this nature won't help you." CR>)
+		       <TELL "Insults won't help you." CR>)
 		      (T
 		       <TELL "What a loony!" CR>)>)
 	       (T
@@ -895,7 +909,7 @@ D ,PRSO " and both tumble to the ground." CR>
 <ROUTINE V-FOLLOW ()
 	 <TELL "You're nuts!" CR>>
 
-<ROUTINE V-LEAP ("AUX" T S)
+<ROUTINE V-LEAP ("AUX" TX S)
 	 #DECL ((T) <OR FALSE TABLE>)
 	 <COND (,PRSO
 		<COND (<IN? ,PRSO ,HERE>
@@ -906,13 +920,13 @@ D ,PRSO " and both tumble to the ground." CR>
 				    " is too big to jump over." CR>)
 			     (T <V-SKIP>)>)
 		      (T <TELL "That would be a good trick." CR>)>)
-	       (<SET T <GETPT ,HERE ,P?DOWN>>
-		<SET S <PTSIZE .T>>
+	       (<SET TX <GETPT ,HERE ,P?DOWN>>
+		<SET S <PTSIZE .TX>>
 		<COND (<OR <==? .S 2>					 ;NEXIT
 			   <AND <==? .S 4>				 ;CEXIT
-				<NOT <VALUE <GETB .T 1>>>>>
+				<NOT <VALUE <GETB .TX 1>>>>>
 		       <TELL
-"This was not a very safe place to try jumping." CR>
+"This was not a safe place to try jumping." CR>
 		       <JIGS-UP "You should have looked before you leaped.">)
 		      (T <V-SKIP>)>)
 	       (ELSE <V-SKIP>)>>
@@ -926,12 +940,12 @@ D ,PRSO " and both tumble to the ground." CR>
 <ROUTINE V-HELLO ()
 	 <COND (,PRSO
 		<TELL
-"I think that only schizophrenics say \"Hello\" to a " D ,PRSO "." CR>)
+"Only schizophrenics say \"Hello\" to a " D ,PRSO "." CR>)
 	       (ELSE <TELL <PICK-ONE ,HELLOS> CR>)>>
 
 <GLOBAL HELLOS
 	<LTABLE "Hello."
-	        "Nice weather we've been having lately."
+	        "Nice weather we're having."
 	        "Goodbye.">>
 
 <GLOBAL WHEEEEE
@@ -987,7 +1001,7 @@ D ,PRSO " and both tumble to the ground." CR>
 	 ()
 	 <COND (<NOT <FSET? ,PRSO ,TURNBIT>> <TELL "You can't turn that!" CR>)
 	       (<NOT <FSET? ,PRSI ,TOOLBIT>>
-		<TELL "You certainly can't turn it with a " D ,PRSI "." CR>)>>
+		<TELL "You can't turn it with a " D ,PRSI "." CR>)>>
 
 <ROUTINE V-TURN () <TELL "That doesn't work." CR>>
 
@@ -1001,7 +1015,6 @@ D ,PRSO " and both tumble to the ground." CR>
 	 <IKILL "kill">>
 
 <ROUTINE IKILL (STR)
-	 #DECL ((STR) STRING)
 	 <COND (<NOT ,PRSO> <TELL "There is nothing here to " .STR "." CR>)
 	       (<AND <NOT <FSET? ,PRSO ,VILLAIN>>
 		     <NOT <FSET? ,PRSO ,VICBIT>>>
@@ -1056,7 +1069,6 @@ D ,PRSO " and both tumble to the ground." CR>
 
 <ROUTINE HACK-HACK
 	 (STR)
-	 #DECL ((STR) STRING)
 	 <TELL .STR D ,PRSO <PICK-ONE ,HO-HUM> CR>>
 
 <GLOBAL HO-HUM
@@ -1112,10 +1124,9 @@ D ,PRSO " and both tumble to the ground." CR>
 		<SETG PRSO ,SPACESUIT>)>
 	 <TELL "It smells just like a " D ,PRSO "." CR>>
 
-<ROUTINE GLOBAL-IN? (OBJ1 OBJ2 "AUX" T)
-	 #DECL ((OBJ1 OBJ2) OBJECT (T) <OR FALSE TABLE>)
-	 <COND (<SET T <GETPT .OBJ2 ,P?GLOBAL>>
-		<ZMEMQB .OBJ1 .T <- <PTSIZE .T> 1>>)>>
+<ROUTINE GLOBAL-IN? (OBJ1 OBJ2 "AUX" TX)
+	 <COND (<SET TX <GETPT .OBJ2 ,P?GLOBAL>>
+		<ZMEMQB .OBJ1 .TX <- <PTSIZE .TX> 1>>)>>
 
 <ROUTINE HERE?? (OBJ)
 	 <OR <IN? .OBJ ,HERE> <GLOBAL-IN? .OBJ ,HERE>>>
@@ -1123,8 +1134,8 @@ D ,PRSO " and both tumble to the ground." CR>
 <ROUTINE V-SWIM ()
 	 <COND (<FSET? ,HERE ,RAIRBIT>
 		<TELL
-"Waving your arms and legs about doesn't help much. You move a little, but
-some stronger impulse would be much more useful." CR>)
+"Waving your limbs doesn't help much. You move a little, but some stronger
+impulse is needed." CR>)
 	       (ELSE
 		<TELL "You can't swim here!" CR>)>>
 
@@ -1224,7 +1235,7 @@ some stronger impulse would be much more useful." CR>)
 	 <RTRUE>>
 
 <ROUTINE V-REPLY ()
-	 <TELL "It is hardly likely that the " D ,PRSO " is interested." CR>
+	 <TELL "It is doubtful that the " D ,PRSO " is interested." CR>
 	 <SETG P-CONT <>>
 	 <SETG QUOTE-FLAG <>>
 	 <RTRUE>>
@@ -1306,6 +1317,8 @@ some stronger impulse would be much more useful." CR>)
 		       <SETG UNDER-GLOBE <>>)>
 		<COND (<EQUAL? .X ,RED-DISK ,BLUE-DISK>
 		       <DISK-SWITCH .X <>>)>
+		<COND (<AND <EQUAL? .X ,SPACESUIT ,SAFETY-LINE> ,THAT-END>
+		       <RTRUE>)>
 		<COND (.WHERE <MOVE .X .WHERE>)
 		      (ELSE <REMOVE .X>)>
 		<RTRUE>)>>
@@ -1341,12 +1354,15 @@ some stronger impulse would be much more useful." CR>)
 
 <ROUTINE V-REPORT ()
 	 <TELL
-"Report? Why don't you wait until you've accomplished something..." CR>>
+"Report?!? Wait until you've accomplished something..." CR>>
 
 <ROUTINE V-LOOK-SAFELY ()
 	 <COND (<FSET? ,PRSI ,TRANSBIT>
-		<TELL "The " D ,PRSO " looks as before, only tinged by the
-color of the " D ,PRSI "." CR>)
+		<TELL "The " D ,PRSO " looks as before">
+		<COND (<NOT <==? ,PRSI ,CLEAR-KEY>>
+		       <TELL ", only tinged by the
+color of the " D ,PRSI>)>
+		<TELL "." CR>)
 	       (ELSE <TELL "The " D ,PRSI " isn't transparent." CR>)>>
 
 <ROUTINE V-REACH ()
@@ -1378,3 +1394,6 @@ color of the " D ,PRSI "." CR>)
 
 <ROUTINE V-SMILE ()
 	 <TELL "How pleasant!" CR>>
+
+<ROUTINE V-EMPTY ()
+	 <TELL "There's nothing to empty." CR>>

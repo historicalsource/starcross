@@ -1,3 +1,8 @@
+"MACROS for
+			      STARCROSS
+	(c) Copyright 1981 Infocom, Inc.  All Rights Reserved.
+"
+
 <SETG C-ENABLED? 0>
 <SETG C-ENABLED 1>
 <SETG C-DISABLED 0>
@@ -36,26 +41,49 @@
 					       <MAPRET
 						 <FORM PRINT
 						       <FORM GETP .O .E>>>)>)>)
-				(<TYPE? .E STRING>
+				(<TYPE? .E STRING ZSTRING>
 				 <MAPRET <FORM PRINTI .E>>)
 				(<TYPE? .E FORM>
 				 <MAPRET <FORM PRINT .E>>)
 				(ELSE <ERROR UNKNOWN-TYPE .E>)>>>>>
 
-<DEFMAC VERB? ("TUPLE" ATMS "AUX" (O ()) (L ())) 
+
+<DEFMAC VERB? ("ARGS" ATMS)
+	<MULTIFROB PRSA .ATMS>>
+
+<DEFMAC PRSO? ("ARGS" ATMS)
+	<MULTIFROB PRSO .ATMS>>
+
+<DEFMAC PRSI? ("ARGS" ATMS)
+	<MULTIFROB PRSI .ATMS>>
+
+<DEFMAC ROOM? ("ARGS" ATMS)
+	<MULTIFROB HERE .ATMS>>
+
+<ZSTR-OFF>
+
+<DEFINE MULTIFROB (X ATMS "AUX" (OO (OR)) (O .OO) (L ()) ATM) 
 	<REPEAT ()
 		<COND (<EMPTY? .ATMS>
-		       <RETURN!- <COND (<LENGTH? .O 1> <NTH .O 1>)
-				     (ELSE <FORM OR !.O>)>>)>
+		       <RETURN!- <COND (<LENGTH? .OO 1> <ERROR .X>)
+				       (<LENGTH? .OO 2> <NTH .OO 2>)
+				       (ELSE <CHTYPE .OO FORM>)>>)>
 		<REPEAT ()
 			<COND (<EMPTY? .ATMS> <RETURN!->)>
 			<SET ATM <NTH .ATMS 1>>
 			<SET L
-			     (<FORM GVAL <PARSE <STRING "V?" <SPNAME .ATM>>>>
+			     (<COND (<TYPE? .ATM ATOM>
+				     <FORM GVAL
+					   <COND (<==? .X PRSA>
+						  <PARSE
+						    <STRING "V?"
+							    <SPNAME .ATM>>>)
+						 (ELSE .ATM)>>)
+				    (ELSE .ATM)>
 			      !.L)>
 			<SET ATMS <REST .ATMS>>
 			<COND (<==? <LENGTH .L> 3> <RETURN!->)>>
-		<SET O (<FORM EQUAL? ',PRSA !.L> !.O)>
+		<SET O <REST <PUTREST .O (<FORM EQUAL? <FORM GVAL .X> !.L>)>>>
 		<SET L ()>>>
 
 <DEFMAC RFATAL ()

@@ -15,10 +15,9 @@ a heavy bulkhead which is " <COND (<FSET? ,AIRLOCK-INNER ,OPENBIT>
 				  (T "closed.")>>
 		<CRLF>
 		<TELL
-"Your ship's computer takes care of all the routine tasks of
-navigation and life support. A control couch is in the front end of the
-room, surrounded by controls and fronting a large viewport. The ship's
-registration is affixed nearby." CR>
+"Your ship's computer does the routine tasks of navigation and life support.
+A control couch is mounted before a control panel and a large viewport. The
+ship's registration is affixed nearby." CR>
 		<TELL
 "Your mass detector, essential in the search for black holes, sits to one
 side. On the detector are a red button, a blue button, and a small screen
@@ -53,13 +52,12 @@ on which something is displayed." CR>)>>
 		       <SETG COMPUTER-ON T>
 		       <COND (.HEAR?
 			      <TELL
-"\"If you won't turn it off, I will. I can't take that noise any more.\"" CR>)>)
+"\"If you won't turn it off, I will. I can't take the noise any more.\"" CR>)>)
 		      (<AND .HEAR? <==? ,MOVES 10>>
 		       <SETG COMPUTER-ON T>
 		       <TELL
-"A somewhat expressionless but nonetheless surly voice issues from
-the computer: \"Will you please turn that alarm off? We'll both have
-headaches if you don't.\"" CR>)>
+"An expressionless but nonetheless surly voice issues from the computer:
+\"Please turn that alarm off! We'll both have headaches if you don't.\"" CR>)>
 		<RTRUE>)>>
 
 <ROUTINE ALARM-FCN ()
@@ -169,16 +167,15 @@ automated." CR>)>)
 	 <COND (<KVETCH> <RTRUE>)
 	       (ELSE
 		<TELL
-"You must set a course by telling the computer the appropriate R, theta,
-and phi values of your destination." CR>)>>
+"Set a course by telling the computer the R, theta, and phi values of
+your destination." CR>)>>
 
 <ROUTINE KVETCH ()
 	 <SETG COMPUTER-COUNT <+ ,COMPUTER-COUNT 1>>
 	 <COND (<==? ,COMPUTER-COUNT 3>
 		<SETG COMPUTER-COUNT 0>
 		<TELL
-"Please consult your manual for the correct operating procedure for the
-computer." CR>)>>
+"Please consult the manual for the proper computer operating procedure." CR>)>>
 
 <GLOBAL R-VALUE <>>
 <GLOBAL THETA-VALUE <>>
@@ -192,23 +189,22 @@ computer." CR>)>>
 		<SETG DESTINATION <>>
 		<SETG LOST <>>
 		<TELL
-"\" Lights blink furiously for a few moments. The computer speaks: ">
+"\" Lights blink furiously for a moment. The computer speaks: ">
 		<SETG GIVE-UP <FIND-DESTINATION ,KNOWN-LOCS ,KNOWNS>>
 		<COND (,GIVE-UP
 		       <TELL
-"\"Navigational program for " D ,GIVE-UP " is programmed and ready. Giving up,
+"\"Navigational program for " D ,GIVE-UP " is ready. Giving up,
 huh? Figures, just when we get a good strike. ">)
 		      (<AND <SETG DESTINATION
 				  <FIND-DESTINATION ,MASS-LOCS ,MASSES>>
 			    <==? ,DESTINATION ,MASS>>
 		       <TELL
-"\"Navigational program for intercept of mass concentration is
-programmed and ready. ">)
+"\"Sequence for intercept of mass concentration is programmed and ready. ">)
 		      (ELSE
 		       <SETG LOST T>
 		       <TELL
-"\"I know my instruments aren't as good as the mass detector, but I don't
-show anything at that location. Well, if you say so. ">)>
+"\"I know my instruments aren't as good as the mass detector, but I see
+nothing at that location. Well, if you say so. ">)>
 	       <TELL "Please confirm new navigational
 program. I'm waiting...\"" CR>)
 	 (T <TELL " Waiting for additional values.\"" CR>)>>
@@ -264,10 +260,9 @@ program. I'm waiting...\"" CR>)
 "The controls look in no way operational." CR>)>)
 	       (<VERB? EXAMINE>
 		<TELL
-"This is the standard control panel for this class of single-passenger
-mining survey ship. Most controls are for emergencies only, as
-the Starcross is normally controlled by verbal instructions to the
-computer.">
+"This is a standard control panel for this class of single-passenger mining
+ship. Most controls are for emergencies only, as the Starcross is normally
+controlled by verbal instructions to the computer.">
 		<COND (<NOT <IN? ,COMPUTER ,HERE>>
 		       <TELL " This set of controls is non-functional.">)>
 		<CRLF>
@@ -284,10 +279,9 @@ Course is set! Remember what happened last time you played with the controls
 in mid-course...\"" CR>)
 			     (ELSE
 			      <TELL
-"The computer's voice intrudes. \"Are you sure you want to touch the
-controls just now? I don't want to impugn your piloting ability, but
-wouldn't you rather have me execute any course corrections?  I'm very
-good at it, you know.\"" CR>)>)
+"The computer's voice intrudes. \"Do you really want to touch the controls
+just now? Not to impugn your piloting ability, but shouldn't I execute any
+course corrections? I'm very good at it, you know.\"" CR>)>)
 		      (ELSE
 		       <SETG COMPUTER-ON T>
 		       <TELL
@@ -303,7 +297,6 @@ currently enabled.\"" CR>)>)>>
 		      (T <ITS-CLOSED ,AIRLOCK-INNER>)>)>>
 
 <ROUTINE OPEN-CLOSE (OBJ STROPN STRCLS)
-	 #DECL ((OBJ) OBJECT (STROPN STRCLS) STRING)
 	 <COND (<VERB? OPEN>
 		<COND (<FSET? .OBJ ,OPENBIT>
 		       <TELL <PICK-ONE ,DUMMY>>)
@@ -330,7 +323,9 @@ currently enabled.\"" CR>)>)>>
 		<RTRUE>)>>
 
 <ROUTINE PORTHOLE-FCN ()
-	 <COND (<VERB? LOOK-INSIDE EXAMINE>
+	 <COND (<VERB? THROUGH>
+		<TELL "There is glass in that porthole, dummy!" CR>)
+	       (<VERB? LOOK-INSIDE EXAMINE>
 		<COND (<==? ,HERE ,SPACESHIP-BRIDGE>
 		       <DESCRIBE-SPACE>)
 		      (<==? ,HERE ,THRONE-ROOM>
@@ -363,10 +358,9 @@ currently enabled.\"" CR>)>)>>
     <COND (<VERB? EXAMINE>
 	   <TELL
 "The grue is a sinister, lurking presence in the dark places of the
-earth. Its favorite diet is spacers, but its insatiable
-appetite is tempered by its fear of light. No grue has ever been
-seen by the light of day, and few have survived its fearsome jaws
-to tell the tale." CR>)
+earth. Its favorite diet is spacers, but its insatiable appetite is
+tempered by its fear of light. No grue has ever been seen by the light
+of day, and few have survived its fearsome jaws to tell the tale." CR>)
 	  (<VERB? FIND>
 	   <TELL
 "There is no grue here, but I'm sure there is at least one lurking
@@ -424,14 +418,14 @@ five meters long. You must detach it to leave." CR>)
 	       (<VERB? KILL MUNG>
 		<COND (<==? ,PRSO ,ME>
 		       <JIGS-UP
-"If you insist.... Poof, you're dead!">)
+"If you insist...Poof, you're dead!">)
 		      (ELSE <TELL "What a silly idea!" CR>)>)
 	       (<VERB? TAKE>
 		<TELL "How romantic!" CR>)
 	       (<VERB? DISEMBARK>
 		<TELL "You'll have to do that on your own." CR>)
 	       (<VERB? EXAMINE>
-		<TELL "That's difficult unless your eyes are prehensile."
+		<TELL "That's hard unless your eyes are prehensile."
 		      CR>)>>
 
 <ROUTINE FIND-IN (WHERE WHAT "AUX" W)
@@ -441,7 +435,7 @@ five meters long. You must detach it to leave." CR>)
 		 <COND (<FSET? .W .WHAT> <RETURN .W>)
 		       (<NOT <SET W <NEXT? .W>>> <RETURN <>>)>>>
 
-<ROUTINE FIND-TARGET (TARGET "AUX" P T L ROOM)
+<ROUTINE FIND-TARGET (TARGET "AUX" P TX L ROOM)
 	 <COND (<IN? .TARGET ,HERE> ,HERE)
 	       (ELSE
 		<SET P 0>
@@ -449,15 +443,15 @@ five meters long. You must detach it to leave." CR>)
 			<COND (<0? <SET P <NEXTP ,HERE .P>>>
 			       <RETURN <>>)
 			      (<NOT <L? .P ,LOW-DIRECTION>>
-			       <SET T <GETPT ,HERE .P>>
-			       <SET L <PTSIZE .T>>
+			       <SET TX <GETPT ,HERE .P>>
+			       <SET L <PTSIZE .TX>>
 			       <COND (<OR <EQUAL? .L ,UEXIT>
 					  <AND <EQUAL? .L ,CEXIT>
-					       <VALUE <GETB .T ,CEXITFLAG>>>
+					       <VALUE <GETB .TX ,CEXITFLAG>>>
 					  <AND <EQUAL? .L ,DEXIT>
-					       <FSET? <GETB .T ,DEXITOBJ>
+					       <FSET? <GETB .TX ,DEXITOBJ>
 						      ,OPENBIT>>>
-				      <SET ROOM <GETB .T 0>>
+				      <SET ROOM <GETB .TX 0>>
 				      <COND (<IN? .TARGET .ROOM>
 					     <RETURN .ROOM>)>)>)>>)>>
 
@@ -490,9 +484,9 @@ five meters long. You must detach it to leave." CR>)
 			     (ELSE
 			      <TELL
 "The computer sounds surly. \"I told you to buy those additional I/O options.
-You know as well as I do that I can't talk to that stupid mass detector, so I
-have no idea where that object is. You're just going to have to tell me the
-coordinates from its output. Maybe next time you'll listen.\"" CR>)>)
+You know as well as I do that I can't talk to that stupid mass detector, so
+you'll just have to tell me the coordinates from its output. Maybe next time
+you'll listen.\"" CR>)>)
 		      (<VERB? R THETA PHI>
 		       <COND (<G? ,VIEW-COUNT 0>
 			      <TELL
@@ -538,9 +532,8 @@ duration. I advise you to fasten your seat belt.\"" CR>)
 "\"Error. I am already landed. Program cancelled.\"" CR>)
 			     (<G? ,VIEW-COUNT 0>
 			      <TELL
-"\"Working... working... Program aborted. The object is spinning too rapidly
-for a safe landing. I can maintain current synchronized course
-indefinitely.\"" CR>)
+"\"Working...working...program aborted. The object is spinning too fast for a
+safe landing. I can maintain current synchronized course indefinitely.\"" CR>)
 			     (ELSE <TELL
 "\"Program cancelled. There is nothing nearby to land on.\"" CR>)>)
 		      (<VERB? EXAMINE>
@@ -567,16 +560,14 @@ indefinitely.\"" CR>)
 "\"We're on our way somewhere unpromising, that's all I can tell you.\"" CR>)
 			     (,GIVE-UP
 			      <TELL
-"\"You've given up and are heading for " D ,GIVE-UP ", or had you
-forgotten?\"" CR>)
+"\"You've given up and are heading for " D ,GIVE-UP ", remember?\"" CR>)
 			     (,DOCKED?
 			      <TELL
 "\"We've docked with this odd object. I think those tentacles may have
 broken something; I don't feel too well.\"" CR>)
 			     (<G? ,VIEW-COUNT 0>
 			      <TELL
-"\"We're on a parallel course with a strange artifact which is
-spinning rapidly beneath us.\"" CR>)
+"\"We're on a parallel course with a strange, rotating artifact.\"" CR>)
 			     (<G? ,TRIP-COUNT 0>
 			      <TELL
 "\"We're heading towards that newly reported unknown mass.">
@@ -628,7 +619,7 @@ a few upgrades I could do some of these things, but no...\"" CR>)
 "\"I'm only a navigational computer. That is not one of my functions.\"" CR>)>)
 	       (<VERB? HELLO>
 		<TELL
-"\"I don't have the patience for small talk.\"" CR>)
+"\"I haven't the patience for small talk.\"" CR>)
 	       (<VERB? LAMP-ON>
 		<COND (,COMPUTER-ON
 		       <ALREADY "on" ,COMPUTER>)
@@ -639,8 +630,8 @@ a few upgrades I could do some of these things, but no...\"" CR>)
 		<COND (,COMPUTER-ON
 		       <SETG COMPUTER-ON <>>
 		       <TELL
-"\"If you insist I'll turn off, but remember, my programming impels me
-to come back on if something important happens.\"" CR>)
+"\"If you insist, but my programming impels me to come back on if
+anything important happens.\"" CR>)
 		      (ELSE <ALREADY "off" ,COMPUTER>)>)
 	       (<VERB? GIVE>
 		<TELL
@@ -653,12 +644,10 @@ but no...\"" CR>)
 "\"We're in the midst of a trip. Are you still asleep?\"">
 
 <GLOBAL BURN-COMING
-"\"I'm too busy, I've got a burn coming up. You'd better brace
-yourself.\"">
+"\"I'm too busy, I've got a burn coming. You'd better brace yourself.\"">
 
 <GLOBAL ROPES-OFF
-"\"Unless you have some idea of how to get those ropes off me, I
-wouldn't try leaving just yet.\"">
+"\"I wouldn't try leaving unless you can get those ropes off me.\"">
 
 <GLOBAL SEAT-BELT? <>>
 
@@ -688,15 +677,14 @@ of course). You are crushed to death.">)>>
 <GLOBAL TRIP-COUNT 0>
 
 <GLOBAL TRIP-DESCS <LTABLE
- "You are headed towards a rather bright starlike object."
+ "You are headed towards a bright starlike object."
  "The starlike object now shows some shape."
  "You are approaching a huge, cylindrical asteroid."
  "The asteroid is unnaturally smooth, but there are surface features on it."
  "Filling space before you is an enormous artifact, more than 5 km long
 and about a kilometer in diameter. Regularly spaced around its waist are
 bumps and other odd protrusions. You cannot see the aft end but the fore
-end sports a glass or crystal dome almost 100 meters across. This dome is
-brightly lit.">>
+end sports a glass or crystal dome almost 100 meters across.">>
 
 <ROUTINE I-TRIP ()
 	 <TELL "Time passes as you journey towards your destination." CR>
@@ -704,10 +692,9 @@ brightly lit.">>
 	 <COND (,GIVE-UP
 		<TELL
 "|
-You arrive at " D ,GIVE-UP " safe and sound. On the other hand,
-you seem to have given up, as " D ,GIVE-UP " has no prospects as a locale
-for quantum black holes. As it would be tedious to continue, this is the
-end.|
+You arrive at " D ,GIVE-UP " safe and sound. It would be tedious to continue,
+as " D ,GIVE-UP " has no prospects as a locale for quantum black holes, so
+this is the end.|
 ">
 		<FINISH>
 		<RTRUE>)>
@@ -728,17 +715,16 @@ See if I'll ever work with you again...\"|
 		      (<==? ,DESTINATION ,MASS>
 		       <TELL
 "There is a brief burn as the ship matches course with the artifact. You
-are hanging in space about one kilometer away from the waist of the object.
-The Starcross's engines shut down. The computer speaks: \"Program
-completed. We are being scanned by low level radiation at various frequencies.
-Waiting for instructions.\"" CR>
+are hanging in space about half a kilometer away from the waist of the object.
+The Starcross's engines shut down. The computer speaks: \"Program completed.
+We are being scanned by low level radiation. Awaiting instructions.\"" CR>
 		       <SETG VIEW-COUNT 1>
 		       <ENABLE <QUEUE I-VIEW 2>>
 		       <SETG ORBIT-MATCHED T>)
 		      (ELSE
 		       <TELL
-"Ahead is a nondescript nickel-iron asteroid, rather a small one too. It is
-obvious that you have picked the wrong destination.|
+"Ahead is a nondescript nickel-iron asteroid, rather a small one too.
+Obviously, you have picked the wrong destination.|
 |" CR>
 		       <FINISH>)>)
 	       (ELSE
@@ -761,8 +747,8 @@ more than we expected here.\"" CR>)>)>
 <ROUTINE I-VIEW ()
 	 <COND (<EQUAL? ,HERE ,SPACESHIP-BRIDGE ,SPACESHIP-AIRLOCK>
 		<TELL
-"As the object rotates beneath you, the surface features of a different
-area are visible through the viewport." CR>
+"As the object rotates below, the features of a different area become
+visible through the viewport." CR>
 		<TELL <GET ,VIEW-TABLE <MOD <- ,VIEW-COUNT 1> 4>> CR>)>
 	 <SETG VIEW-COUNT <+ ,VIEW-COUNT 1>>
 	 <COND (<==? ,VIEW-COUNT 5> <TENTACLE-APPEARS>)
@@ -771,7 +757,7 @@ area are visible through the viewport." CR>
 <GLOBAL VIEW-TABLE <TABLE
 "There is an area with a blue dome below. Near the dome is a spherical object
 which just might be a spaceship. It is held down by silvery ropes."
-"The area here has a yellow dome. The surface of the object here looks damaged
+"This area has a yellow dome. The surface of the object here looks damaged
 and scorched, and is littered with tangled debris."
 "This area has a green dome and a long, silvery spaceship tethered nearby."
 "Below is an area with a red dome which has no ship near it.">>
@@ -785,8 +771,8 @@ articulated metal tentacle issues from it at great speed.">
 	 <COND (<EQUAL? ,HERE ,DEEP-SPACE>
 		<CRLF>
 		<JIGS-UP
-"The tentacle grabs the ship around the hull, spinning you off into the
-depths of space!">)
+"The tentacle grabs the Starcross, spinning you off into the depths of
+space!">)
 	       (<EQUAL? ,HERE ,SPACESHIP-BRIDGE ,SPACESHIP-AIRLOCK>
 		<TELL
 " It approaches the ship and delicately wraps itself around the hull."> <COND (,SEAT-BELT?
@@ -795,18 +781,18 @@ depths of space!">)
 			 (ELSE
 			  <TELL
 		" You are smashed against the bulkhead">)>
-		   <TELL " as the tentacle accelerates the Starcross to
-the speed of rotation of the object. Inexorably, your ship is drawn toward
-the dome. When you are a few tens of meters away, three smaller tentacles
-issue forth and grapple the ship solidly to the surface of the artifact. The
-large tentacle retreats into its housing, which closes.|">
+		   <TELL " as the tentacle accelerates the Starcross to the
+artifact's speed of rotation. Inexorably, your ship is drawn toward the dome.
+When you are a few tens of meters away, three smaller tentacles issue forth
+and grapple the ship solidly to the surface of the artifact. The large
+tentacle retreats into its housing, which closes.|">
 <COND (,SEAT-BELT?
        <TELL
 "|
 You are disoriented: now that you are attached to the artifact, which is
 rotating, \"up\" and \"down\" have taken on new meanings. Your sense
 of balance tells you that your ship is clinging to the underside of some
-enormous object, and if you aren't careful you will fall!  \"Up\" now
+enormous object, and if you aren't careful you will fall! \"Up\" now
 refers to the center of the object, \"down\" to the immensities of space." CR>)
       (ELSE
        <JIGS-UP "Unfortunately, the accelerations involved were tremendous,
@@ -862,16 +848,15 @@ at rest, but unfortunately, so are you.">)>
 	 "A list of the works of Edgar Rice Burroughs is read off."
 	 "This is Pynchon's \"Gravity's Rainbow.\""
 	 "Vernon's \"Origins of the Third World War\" plays."
-	 "The classic computer mystery \"Deadline\" is displayed."
-	 >>
+	 "The classic computer mystery \"Deadline\" is displayed.">>
 
 \
 
 <ROUTINE MOUSE-CONT ()
 	 <COND (<VERB? TAKE>
 		<TELL
-"The maintenance mouse buzzes for a moment, then rotates its \"ears\" in your
-direction as you reach for the " D ,PRSO ". It seems profoundly puzzled at
+"The maintenance mouse buzzes briefly, then rotates its \"ears\" in your
+direction as you take the " D ,PRSO ". It seems profoundly puzzled at
 your behavior." CR>
 		<RFALSE>)>>
 
@@ -897,10 +882,13 @@ your behavior." CR>
 "A small metal contraption about a meter long and half a meter high
 enters the room." ,LONG-MOUSE>)>
 		<CRLF>)
-	       (<AND <EQUAL? ,GLOBAL-MOUSE ,PRSO ,PRSI>
-		     <NOT <IN? ,MOUSE ,HERE>>>
+	       (<AND <NOT <IN? ,MOUSE ,HERE>>
+		     <OR <EQUAL? ,GLOBAL-MOUSE ,PRSO ,PRSI>
+			 <EQUAL? ,MOUSE ,PRSO ,PRSI> ;"CHOMPING AGAIN">>
 		<COND (<VERB? FOLLOW>
-		       <COND (,GARAGED?
+		       <COND (<NOT ,LIT>
+			      <TELL "It's too dark to follow the mouse." CR>)
+			     (,GARAGED?
 			      <TELL "You can't go through the hole." CR>)
 			     (,MFOLLOW
 			      <DO-WALK ,MFOLLOW> <RTRUE>)
@@ -915,26 +903,34 @@ enters the room." ,LONG-MOUSE>)>
 		<TELL "The mouse is obliterated, squealing piteously." CR>)
 	       (<VERB? MUNG>
 		<TELL "The maintenance mouse is unscathed." CR>)
+	       (<VERB? EMPTY>
+		<COND (<ROB ,MOUSE ,WINNER>
+		       <TELL "You get some booty!" CR>)>)
 	       (<VERB? EXAMINE LOOK-INSIDE>
 		<COND (<VERB? EXAMINE>
 		       <TELL
 "The maintenance mouse is a boxy machine with a large receptacle on top in
-which various objects it collects can be stored. It is buzzing back and forth
-looking for garbage, diligently polishing the floor, and waving its \"ears\"
-(small dish antennae) about." CR>)>
+which garbage it collects can be stored. It is buzzing around cleaning the
+area, diligently polishing the floor, and waving its \"ears\" (small dish
+antennae) about." CR>)>
 		<COND (<FIRST? ,MOUSE>
 		       <TELL "The receptacle on the mouse's back contains: ">
 		       <PRINT-CONTENTS ,MOUSE>
 		       <TELL "." CR>)
 		      (ELSE <TELL "The receptacle is empty." CR>)>)
+	       (<VERB? LOOK-UNDER> <TELL "There is no dirt there." CR>)
+	       (<VERB? BOARD>
+		<TELL
+"The mouse buzzes piteously from the overload until you get back off.
+It only wants to collect small pieces of debris." CR>)
 	       (<VERB? OPEN CLOSE>
 		<TELL
 "The mouse has no lid, just an open receptacle on its back." CR>)>>
 
-<GLOBAL LONG-MOUSE " Its guidance system (two large dish antennae at the
-front) circles quizzically. A power antenna juts from the rear. On top
-is a small tray. It cleans the floor as it goes, humming contentedly. All
-in all, it looks like nothing so much as a mechanical mouse.">
+<GLOBAL LONG-MOUSE " Its guidance system (two dish antennae at the front)
+circles quizzically. A power antenna juts from the rear. On top is a small
+tray. It cleans the floor as it goes, humming contentedly. All in all, it
+looks like nothing so much as a mechanical mouse.">
 
 <ROUTINE OUT-OF-HOLE ()
 	 <COND (<AND ,SEEN-MOUSE? ,LIT>
@@ -943,9 +939,8 @@ in all, it looks like nothing so much as a mechanical mouse.">
 	       (ELSE
 		<SETG SEEN-MOUSE? T>
 		<TELL
-"A small metal contraption" ,HOLE-SHUTS " as soon as the device emerges.
-The device stops in its tracks and buzzes briefly, giving you a shot at
-a closer look." ,LONG-MOUSE CR>)>
+"A small metal contraption" ,HOLE-SHUTS ". The device stops in its tracks and
+buzzes briefly, allowing you a closer look." ,LONG-MOUSE CR>)>
 	 <RTRUE>>
 
 <GLOBAL HOLE-SHUTS
@@ -1006,8 +1001,8 @@ trash." CR>)>)
 		       <MOVE ,MOUSE-HOLE .HERE?>
 		       <COND (,LIT
 		       <TELL
-"The mouse disappears into a heretofore unnoticed hole in the wall. "
-,HOLE-SHUTS "." CR>)>)>)
+"The mouse disappears into a heretofore unnoticed hole in the wall, which
+closes and becomes nearly invisible." CR>)>)>)
 	       (ELSE
 		<MOVE-MOUSE>
 		<SET ROBBED? <ROB <LOC ,MOUSE> ,MOUSE>>
@@ -1029,22 +1024,20 @@ conquer." CR>
 		      (.ROBBED?
 		       <COND (.HERE?
 			      <TELL
-"The mouse has decided to collect some discarded items." CR>)>)
+"The mouse collects some discarded items." CR>)>)
 		      (.HERE?
 		       <TELL
-"The mouse is diligently cleaning the floor and looking for
-garbage." CR>)>)>
+"The mouse is diligently cleaning the floor and looking for garbage." CR>)>)>
 	 <IN? ,MOUSE ,HERE>>
 
-<ROUTINE MOVE-MOUSE ("AUX" (H <LOC ,MOUSE>) (P 0) T L (D <>))
+<ROUTINE MOVE-MOUSE ("AUX" (H <LOC ,MOUSE>) (P 0) TX L (D <>))
 	 <REPEAT ()
 		 <COND (<L? <SET P <NEXTP .H .P>> ,LOW-DIRECTION>
 			<COND (.D
 			       <COND (<EQUAL? .D ,UP-A-TREE>
 				      <COND (<IN? ,MOUSE ,HERE>
 					     <TELL
-"The mouse tries briefly to climb a large tree, but meets little
-success." CR>)>
+"The mouse tries to climb a tree, but fails dismally." CR>)>
 				      <RFALSE>)
 				     (<EQUAL? .D ,MAZE>
 				      <COND (<IN? ,MOUSE ,HERE>
@@ -1056,15 +1049,15 @@ aliens." CR>)>
 				      <MOVE ,MOUSE .D>)>)>
 			<RTRUE>)
 		       (ELSE
-			<SET T <GETPT .H .P>>
-			<SET L <PTSIZE .T>>
+			<SET TX <GETPT .H .P>>
+			<SET L <PTSIZE .TX>>
 			<COND (<OR <EQUAL? .L ,UEXIT>
 				   <AND <EQUAL? .L ,CEXIT>
-					<VALUE <GETB .T ,CEXITFLAG>>>>
+					<VALUE <GETB .TX ,CEXITFLAG>>>>
 			       <COND (<OR <NOT .D> <PROB 50>>
 				      <COND (<IN? ,MOUSE ,HERE>
 					     <SETG MFOLLOW .P>)>
-				      <SET D <GETB .T ,REXIT>>)>)>)>>>
+				      <SET D <GETB .TX ,REXIT>>)>)>)>>>
 
 ;<ROUTINE V-MOUSE ()
 	 <TELL "The mouse is in " D <LOC ,MOUSE>>
@@ -1081,11 +1074,11 @@ aliens." CR>)>
 <ROUTINE HOLE-FCN ()
 	 <COND (<VERB? OPEN>
 		<TELL
-"There is no apparent way to open the mouse hole. You can
-barely even see the seam between it and the wall." CR>)
+"There is no apparent way to open the mouse hole. You can barely even see
+the seam between it and the wall." CR>)
 	       (<VERB? MUNG>
 		<TELL
-"This has no effect other than to make it even less obvious where the
+"This has no effect except making it even less obvious where the
 hole is." CR>)>>
 
 <GLOBAL TRASH-COUNT 0>
@@ -1102,7 +1095,7 @@ and broken spears are just some of the items visible on the top layer.">
 		<CRLF>)
 	       (<VERB? SHAKE>
 		<TELL "The bin is solidly affixed to the floor." CR>)
-	       (<VERB? REACH>
+	       (<VERB? REACH EMPTY>
 		<TELL
 "There's a lot of stuff inside the bin." CR>)
 	       (<VERB? SEARCH DIG THROUGH>
@@ -1111,15 +1104,15 @@ and broken spears are just some of the items visible on the top layer.">
 "You find nothing else of interest." CR>)
 		      (<==? ,TRASH-COUNT 0>
 		       <TELL
-"After searching a bit, you have found a great deal of junk, but nothing
-of value. There is a great deal of trash here." CR>
+"You have searched through part of the bin, but have found nothing of
+interest." CR>
 		       <SETG TRASH-COUNT 25>)
 		      (<PROB ,TRASH-COUNT>
 		       <MOVE ,GREEN-KEY ,TRASH-BIN>
 		       <FSET ,GREEN-KEY ,TOUCHBIT>
 		       <THIS-IS-IT ,GREEN-KEY>
 		       <TELL
-"Ahah, there's something!  It appears to be a green crystal rod." CR>)
+"Ahah, there's something! It appears to be a green crystal rod." CR>)
 		      (ELSE
 		       <SETG TRASH-COUNT <+ ,TRASH-COUNT 25>>
 		       <TELL
@@ -1128,16 +1121,20 @@ of value. There is a great deal of trash here." CR>
 <ROUTINE HOLE-PSEUDO ()
 	 <COND (<VERB? EXAMINE>
 		<TELL
-"The hole is deep and the air in it is warm." CR>)
+"The chute seems bottomless and warm air rises from it." CR>)
 	       (<AND <VERB? DROP> <==? ,PRSI ,PSEUDO-OBJECT>>
-		<REMOVE ,PRSO>
-		<TELL
-"The " D ,PRSO " falls into the hole and disappears." CR>)
+		<COND (<IDROP>
+		       <COND (<AND <EQUAL? ,PRSO ,SPACESUIT ,SAFETY-LINE>
+				   <APPLY <GETP ,PRSO ,P?ACTION>>>
+			      <RTRUE>)>
+		       <REMOVE ,PRSO>
+		       <TELL
+"The " D ,PRSO " falls down the chute and disappears." CR>)
+		      (ELSE <RTRUE>)>)
 	       (<VERB? CLIMB-DOWN THROUGH>
 		<JIGS-UP
-"The hole leads straight to the input hopper of a fusion reactor which
-gets some of its power from trash. It is now getting some of its power
-from you.">)>>
+"The chute leads straight to the input hopper of a fusion reactor which gets
+some of its power from trash. It's now getting some of its power from you.">)>>
 
 \
 
@@ -1203,8 +1200,8 @@ Every so often, he makes a happy little noise." CR>)
 		      (<VERB? EXAMINE FIND IS-IN FOLLOW>
 		       <TELL
 "\"I can't help you there, I'm afraid. I'm quite a stay-at-home, I haven't
-left my ship for ages; nothing interesting going on out there any more.
-Those furry ones were interesting for a while but they're stagnant now.\"" CR>)
+left my ship for ages; nothing interesting out there any more. Those furry
+ones were interesting for a while but they're stagnant now.\"" CR>)
 		      (<AND <VERB? TAKE> <==? ,PRSO ,TAPE-PLAYER>>
 		       <SETG WINNER ,ADVENTURER>
 		       <PERFORM ,V?GIVE ,PRSO ,SPIDER>
@@ -1221,10 +1218,11 @@ gift." CR>)
 		       <TELL
 "\"I see. Thank you.\" He seems quite pleased." CR>)>)
 	       (<VERB? EXAMINE> <TELL <GETP ,SPIDER ,P?LDESC> CR>)
-	       (<VERB? MUNG>
+	       (<VERB? MUNG ZAP>
 		<JIGS-UP
-"Bad idea. The spider grabs you with two of its arms and tears you apart.">)
+"Bad idea. The spider tears you apart with two of its arms.">)
 	       (<IN? ,TAPE-PLAYER ,SPIDER>
+		<SETG P-CONT <>>
 		<TELL ,ENGROSSED CR>)
 	       (<VERB? HELLO TELL>
 		<COND (<NOT ,TALKED?>
@@ -1243,40 +1241,38 @@ gift." CR>)
 		       <PUTP ,SPIDER ,P?LDESC
 "There is a giant spider here, listening to a tape player.">
 		       <TELL
-"The spider examines the tape player, then discovers the controls. A random
-song begins playing. Agitated, he fiddles with the controls again, and
-something else plays, a lecture this time. He becomes even more agitated.
-\"What a wonderful gift, human! This will alleviate my boredom for a while.
-Your culture is young, but you have amassed enough of interest to keep me
-sane for a few more years. I thank you.\" He fishes in a nearby pouch and
-comes up with something. \"Perhaps you may find some use from this; I
-long ago grew bored with such baubles.\" He tosses a yellow crystal rod at your
-feet." CR>)
+"The spider examines the tape player and discovers the controls. A random
+song begins playing. Agitated, he fiddles with the controls again, and a
+lecture begins. He becomes even more agitated. \"What a wonderful gift,
+human! This will alleviate my boredom for a while. Your culture is young,
+but you have amassed enough of interest to keep me sane for a few more years.
+I thank you.\" He fishes in a pouch and comes up with something. \"Perhaps
+you may find some use for this; I long ago grew bored with such baubles.\" He
+tosses a yellow crystal rod at your feet." CR>)
 		      (ELSE
 		       <TELL
 "He takes the " D ,PRSO " politely, looks it over for a moment, and gives
 it back. \"No, thank you,\" he sighs." CR>)>)>>
 
 <GLOBAL ENGROSSED 
-"Gurthark is engrossed in the tape library, and pays no attention to you.">
+"Gurthark, engrossed in the tape library, pays no attention to you.">
 
 <ROUTINE SPIDER-GREETING ()
 	 <SETG TALKED? T>
 	 <TELL
-"The spider draws forth an object from one of the wire clumps. He fiddles
-for a moment, then a voice issues from it: \"Greetings, creature
-from Earth. Are you afraid of me? Come closer, I won't harm you.\"|
+"The spider draws forth an object from a wire clump. He fiddles with it and
+a voice issues from it: \"Greetings, creature from Earth. Are you afraid of
+me? Come closer, I won't harm you.\"|
 |
 The spider tells you his name is \"Gurthark-tun-Besnap,\" (or something
-more-or-less that). Like yourself, he landed here to explore. He didn't
-succeed in controlling the artifact before it left his system, and has been
-stranded here since. He sighs. \"It has been many centuries, and it's getting
-a little boring. The other inhabitants of this place are not too stimulating.
-The computer was some company until it malfunctioned. When we began to
-approach your system, I got excited! A whole new culture to learn! The end
-of boredom, for a while at least. I fed your language to my translator,
-from your radio broadcasts, and have eagerly awaited your arrival.\" He grins
-broadly, a fairly horrific sight." CR>>
+more-or-less that). Like yourself, he landed here to explore. He failed to
+control the artifact before it left his system, and has been stranded here
+for centuries. He sighs. \"It's getting a little boring. The other inhabitants
+of this place are not too stimulating. The computer was some company until it
+malfunctioned. When we began to approach your system, I got excited! A whole
+new culture to learn! The end of boredom, for a while at least. I fed your
+language to my translator, from your radio broadcasts, and have eagerly
+awaited your arrival.\" He grins broadly, a fairly horrific sight." CR>>
 
 \
 
@@ -1317,7 +1313,7 @@ hard you press." CR>)
 		       <RTRUE>)
 		      (<==? ,FF-STRENGTH 4>
 		       <TELL
-"The globe is now touching the floor (in fact part of it seems to be in the
+"The globe is now touching the floor (in fact encompassing part of the
 floor), so you can't put anything under it." CR>)
 		      (,UNDER-GLOBE
 		       <TELL
@@ -1396,10 +1392,9 @@ enough energy to restore the globe, and it reappears." CR>
 <ROUTINE FF-ROOM-FCN (RARG)
 	 <COND (<==? .RARG ,M-LOOK>
 		<TELL
-"This is a glaringly lit room filled with many strange devices. Most are
-completely incomprehensible. For example, a huge projector of some sort
-points menacingly at a silvery globe floating in midair in the center of
-the room. ">
+"This is a glaringly lit room filled with strange devices, most completely
+incomprehensible. For example, a huge projector of some sort points menacingly
+at a silvery globe floating in midair in the center of the room. ">
 		<GLOBE-SIZE ,FF-STRENGTH>
 		<TELL
 " Beneath the projector is a dial with four positions." CR>
@@ -1542,7 +1537,7 @@ disorientation." CR>
 				      ,UNDER-GLOBE ,WAS-UNDER-GLOBE>
 			      <JIGS-UP
 "You reappear amidst the sphere. Unfortunately, parts of you are inside it
-and parts of you are outside it.  Very untidy.">
+and parts of you are outside it. Very untidy.">
 			      <RTRUE>)>
 		       <COND (<IN? .OTHER ,PRSO>
 			      <REMOVE ,RED-DISK>
@@ -1582,10 +1577,12 @@ disk into itself. You are, unfortunately, intimately part of the explosion.">
 			      <TELL
 "You hear a muffled explosion." CR>)
 			     (ELSE
+			      <SETG UNDER-GLOBE <>>
+			      <SETG WAS-UNDER-GLOBE <>>
 			      <TELL
 "The " D ,PRSI " activates as the " D ,PRSO " touches it. It disappears
-for the merest fraction of a second, then a blinding flash of light fills
-the room as both disks explode!" CR>)>)
+for a fraction of a second, then a flash of light fills the room as both
+disks explode!" CR>)>)
 		      (ELSE
 		       <MOVE ,PRSO .OTHER>
 		       <COND (<IN? .OTHER ,PRSI>
@@ -1656,15 +1653,14 @@ for a fraction of a second, then reappears resting comfortably on the "
 <ROUTINE PROJECTOR-FCN ()
 	 <COND (<VERB? EXAMINE>
 		<TELL
-"It is a formidable looking piece of apparatus that beams some sort of beam
+"It is a formidable looking apparatus that beams some sort of beam
 directly at the silvery globe." CR>)
 	       (<AND <VERB? ZAP> <CAN-ZAP?>>
 		<TELL
-"The projector is of the sturdiest construction, and is therefore
-unscathed." CR>)
+"The projector, of the sturdiest construction, is unscathed." CR>)
 	       (<VERB? MUNG>
 		<TELL
-"The projector is constructed of extremely tough plastic (yes, plastic)
+"The projector is made of extremely tough plastic (yes, plastic)
 and is unscathed." CR>)>>
 
 <ROUTINE BEAM-FCN ()
@@ -1742,10 +1738,9 @@ your magnetic boots hold you securely as you hang \"upside-down.\"" CR>
 
 <ROUTINE DESCRIBE-LOCK (COLOR INNER OUTER)
 	 <TELL
-"This is the main airlock of the " .COLOR " docking port. One door leads out to
-the surface, another up into the artifact's interior. The
-inner door is " <DDESC .INNER> ", and the outer door is "
-<DDESC .OUTER> "." CR>>
+"This is the main airlock of the " .COLOR " docking port. The inner door
+leading up to the interior is " <DDESC .INNER> ", and the outer door leading
+down to the surface is " <DDESC .OUTER> "." CR>>
 
 <ROUTINE DDESC (D) <COND (<FSET? .D ,OPENBIT> "open")(T "closed")>>
 
@@ -1789,8 +1784,8 @@ spaceship by opening both doors of the airlock at once." CR>)
 			      <ALREADY "open">)
 			     (<FSET? ,AIRLOCK-INNER ,OPENBIT>
 			      <TELL
-"You must close the inner door first, or you will empty all the air out of
-the ship. A safety interlock prevents this action." CR>)
+"A safety interlock prevents you from opening both doors of the airlock
+simultaneously." CR>)
 			     (ELSE
 			      <FSET ,PRSO ,OPENBIT>
 			      <VACUUM-HERE>
@@ -1800,10 +1795,7 @@ the ship. A safety interlock prevents this action." CR>)
 to prevent you from drifting away into space.">)>
 			      <CRLF>
 			      <COND (<NOT ,SUIT-ON?>
-				     <JIGS-UP
-"Didn't they teach you to anything in the Academy? You can't breathe
-vacuum! The process of dying is this way is very painful but at least
-relatively short.">)>
+				     <JIGS-UP ,ACADEMY-DEATH>)>
 			      T)>)
 		      (<NOT <FSET? ,PRSO ,OPENBIT>>
 		       <ALREADY "closed">)
@@ -1818,8 +1810,8 @@ relatively short.">)>
 		       <TELL "You see the bridge." CR>)
 		      (,DOCKED?
 		       <TELL
-"You see the red docking area of the artifact, covered with strange
-bumps and protrusions. Forward of here is a dome with an airlock." CR>)
+"You see the red docking area of the artifact, including
+a dome with an airlock." CR>)
 		      (ELSE <DESCRIBE-SPACE>)>)>>
 
 <ROUTINE DOOR-OPENS ()
@@ -1833,27 +1825,27 @@ bumps and protrusions. Forward of here is a dome with an airlock." CR>)
 <ROUTINE DEEP-SPACE-FCN ("OPTIONAL" (RARG <>))
 	 <COND (<==? .RARG ,M-LOOK>
 		<TELL
-"You are floating outside the airlock of the Starcross. The airlock
-door is " <COND (<FSET? ,AIRLOCK-OUTER ,OPENBIT> "open")
+"You are floating outside the Starcross. The airlock door
+is " <COND (<FSET? ,AIRLOCK-OUTER ,OPENBIT> "open")
 		(T "closed")>>
 		       <COND (,THAT-END
-			      <TELL ". One end of your safety line is attached to
-a hook next to the airlock.">)
+			      <TELL ". One end of your safety line is
+attached to a hook next to the airlock.">)
 			     (ELSE
 			      <TELL ". There is a hook next to the airlock.">)>
 		       <TELL
-" This is deep space, outside the plane of the ecliptic and much further out
-than the orbit of Earth. The sun seems small but still intolerably bright to
-look at directly." CR>
+" This is deep space, outside the plane of the ecliptic and far beyond the
+orbit of Earth. The sun seems small but still intolerably bright to look at
+directly." CR>
 		       <DESCRIBE-SPACE>)
 	       (<==? .RARG ,M-END>
 		<COND (<OR <NOT ,THIS-END> <NOT ,THAT-END>>
 		       <TELL
 "You have left the Starcross in deep space without a safety
-line, a good way to drift away into space and eventually run out of air." CR>
+line, a good way to drift into space and eventually run out of air." CR>
 		       <COND (<PROB 40>
 			      <TELL
-"So far you have been lucky and not drifted very far." CR>)
+"So far you've been lucky and not drifted very far." CR>)
 			     (ELSE <JIGS-UP
 "In fact, this is exactly what has happened to you.">)>
 		       <RTRUE>)>)
@@ -1863,7 +1855,7 @@ line, a good way to drift away into space and eventually run out of air." CR>
 			    <EQUAL? ,PRSO ,AIRLOCK-OUTER>>
 		       <COND (<FSET? ,AIRLOCK-OUTER ,OPENBIT>
 			      <TELL
-"Just in time you grab the outer hatch and pull yourself back in.|" CR>
+"Just in time you pull yourself back into the airlock.|" CR>
 			      <GOTO ,SPACESHIP-AIRLOCK>)
 			     (ELSE
 			      <TELL
@@ -1872,21 +1864,24 @@ line, a good way to drift away into space and eventually run out of air." CR>
 <ROUTINE OUTER-SPACE-FCN ("OPTIONAL" (RARG <>))
 	 <COND (<==? .RARG ,M-LOOK>
 		<TELL
-"You are floating in space above the artifact. A panoramic view of the surface
-rotates by below you. Unfortunately you will eventually run out of air, which
-will ruin the experience." CR>)
+"You are floating in space above the artifact, giving you a panoramic view of
+its surface. Unfortunately you will soon run out of air, which will ruin the
+experience." CR>)
 	       (<==? .RARG ,M-BEG>
-		<COND (<VERB? THROW>
-		       <THROW-AWAY>)
+		<COND (<VERB? THROW> <THROW-AWAY>)
 		      (<AND <VERB? ZAP> <CAN-ZAP?>>
 		       <JIGS-UP
-"The gun fires, and the force of the blast drives you back towards the
-surface of the artifact! You impact with a tremendous smash, as its
-rotation and your velocity combine to wipe you out.">)>)>>
+"The force of the blast slows your recession from the artifact, but not
+enough. You continue to drift away, and eventually run out of air.">)>)>>
 
 <ROUTINE THROW-AWAY ()
-	 <REMOVE ,PRSO>
-	 <TELL "The " D ,PRSO " sails away into space." CR>>
+	 <COND (<IDROP>
+		<COND (<AND <EQUAL? ,PRSO ,SPACESUIT ,SAFETY-LINE>
+			    <APPLY <GETP ,PRSO ,P?ACTION>>>
+		       <RTRUE>)>
+		<REMOVE ,PRSO>
+		<TELL "The " D ,PRSO " sails away into space." CR>)
+	       (ELSE <RTRUE>)>>
 
 <GLOBAL COLOR-CODED
 "This is a docking port color-coded in red. ">
@@ -1894,8 +1889,7 @@ rotation and your velocity combine to wipe you out.">)>)>>
 <ROUTINE DESCRIBE-SPACE ()
 	 <COND (,DOCKED?
 		<TELL
-,COLOR-CODED "Your ship is tethered
-securely with thick silvery ropes. You are next to a large dome
+,COLOR-CODED "Your ship is tethered securely next to a large dome
 with an airlock. The surface looks metallic." CR>)
 	       (<G? ,VIEW-COUNT 0>
 		<TELL <GET ,VIEW-TABLE <MOD <+ ,VIEW-COUNT 2> 4>>
@@ -1930,7 +1924,9 @@ with an airlock. The surface looks metallic." CR>)
 
 <ROUTINE ARTIFACT-FCN ()
 	 <COND (<NOT ,DOCKED?> <TELL "What artifact?" CR>)
-	       (<VERB? EXAMINE FIND> <TELL "It's all around!" CR>)>>
+	       (<VERB? EXAMINE FIND>
+		<COND (,IN-ARTIFACT? <TELL "It's all around!" CR>)
+		      (ELSE <TELL "It's right here.!" CR>)>)>>
 
 <GLOBAL SUIT-ON? <>>
 
@@ -1954,7 +1950,7 @@ with an airlock. The surface looks metallic." CR>)
 		       <FCLEAR ,SPACESUIT ,WEARBIT>
 		       <COND (<FSET? ,HERE ,SPACEBIT>
 			      <JIGS-UP
-"That was a pretty silly thing to do, as there is no air here. You
+"That was a silly thing to do, as there is no air here. You
 die of all sorts of asphyxiation.">)
 			     (<==? ,POISON-COUNT 4>
 			      <JIGS-UP
@@ -1967,7 +1963,7 @@ after removing the space suit.">)
 				     <DESCRIBE-AIR " The air here is ">)
 				    (ELSE <CRLF>)>)>)
 		      (ELSE <TELL "You aren't wearing it." CR>)>)
-	       (<VERB? DROP GIVE THROW>
+	       (<VERB? DROP GIVE THROW PUT>
 		<COND (,SUIT-ON?
 		       <TELL "You'll have to take it off first!" CR>)
 		      (ELSE
@@ -2076,7 +2072,7 @@ in his own language." CR>)
 			     (ELSE
 			      <TELL "It's not attached to anything." CR>)>)>
 		<RTRUE>)
-	       (<VERB? PUT DROP THROW GIVE PUT-ON>
+	       (<VERB? PUT DROP THROW GIVE PUT-ON TAKE>
 		<COND (<OR ,THIS-END ,THAT-END>
 		       <TELL
 "You should detach it first." CR>)>)>>
@@ -2085,10 +2081,15 @@ in his own language." CR>)
 
 <ROUTINE CORIOLIS ()
 	 <COND (<VERB? DROP THROW>
-		<REMOVE ,PRSO>
-		<TELL
+		<COND (<IDROP>
+		       <COND (<AND <EQUAL? ,PRSO ,SPACESUIT ,SAFETY-LINE>
+				   <APPLY <GETP ,PRSO ,P?ACTION>>>
+			      <RTRUE>)>
+		       <REMOVE ,PRSO>
+		       <TELL
 "As the " D ,PRSO " leaves your hand, it is thrown into space by the rotation
-of the artifact." CR>)>>
+of the artifact." CR>)
+		      (ELSE <RTRUE>)>)>>
 
 <ROUTINE RED-DOCK-FCN (RARG)
 	 <COND (<==? .RARG ,M-BEG> <CORIOLIS>)
@@ -2097,11 +2098,11 @@ of the artifact." CR>)>>
 		<RFALSE>)
 	       (<==? .RARG ,M-LOOK>
 		<TELL
-,COLOR-CODED "All around are strange
-protrusions, one of which looks like a hook for a safety line. The surface
-here is metallic, but gets stony further from the dock. On one side (\"Down\")
-is your ship, tethered securely to the surface of the artifact by thick
-silvery ropes. On the other (\"Up\") is a large dome with an airlock">
+,COLOR-CODED "All around are strange protrusions, one of which could be a
+hook for a safety line. The surface here is metallic, but gets stony further
+from the dock. On one side (\"Down\") is your ship, tethered to the surface
+of the artifact by thick silvery ropes. On the other (\"Up\") is a large dome
+with an airlock">
 		<COND (<FSET? ,RED-OUTER ,OPENBIT>
 		       <TELL
 ", which is open." CR>)
@@ -2127,9 +2128,9 @@ silvery ropes. On the other (\"Up\") is a large dome with an airlock">
 "A closer examination reveals that there are exactly ten circular bumps or
 columns on the sculpture: the first is large and centrally located, the
 second through tenth are smaller and scattered at various distances and
-orientations. As you go outward from the large bump
-in the center there are four small bumps, two rather large ones, two
-medium-sized ones, and then a small one again." CR>
+orientations. As you go outward from the large bump in the center there are
+four small bumps, two rather large ones, two medium-sized ones, and finally
+a small one which sticks out quite far." CR>
 		<COND (<IN? ,BABY-BUMP ,HERE>
 		       <TELL
 "There is also a tiny bump" ,ABOUT-SAME CR>)>)>
@@ -2178,17 +2179,15 @@ medium-sized ones, and then a small one again." CR>
 		       <PUTP ,RELIEF ,P?LDESC
 "The door is covered by a smooth pattern of silver hexagons.">
 		       <TELL
-"The entire sculpture flattens out completely, except at the former
-location of the tiny bump, where a hexagonal rod of black crystal
-is extruded." CR>)
+"The sculpture flattens out completely, except at the former location of the
+tiny bump, where a hexagonal rod of black crystal is extruded." CR>)
 		      (<0? ,P-NUMBER>
 		       <TELL "You must specify which one." CR>)
 		      (<AND <==? ,P-NUMBER 4>
 			    <NOT <IN? ,BABY-BUMP ,HERE>>>
 		       <MOVE ,BABY-BUMP ,HERE>
 		       <TELL
-"Nothing happens for a moment, then a tiny column made up of only one hexagon
-appears at" ,ABOUT-SAME CR>)
+"A tiny column made up of only one hexagon appears at" ,ABOUT-SAME CR>)
 		      (ELSE
 		       <REMOVE ,BABY-BUMP>
 		       <REMOVE ,BUMP>
@@ -2200,7 +2199,7 @@ appears at" ,ABOUT-SAME CR>)
 leaving the sculpture completely smooth." CR>)>)>>
 
 <GLOBAL ABOUT-SAME
-" about the same distance from the center as the first large bump.">
+" a distance somewhat nearer the center than the first large bump.">
 
 <ROUTINE RED-DOORS-FCN ("AUX" DIR)
 	 <COND (<VERB? THROUGH>
@@ -2288,14 +2287,13 @@ body. It is out of reach from here." CR>)>
 	 <COND (<VERB? LEAP>
 		<COND (<AND ,THIS-END ,THAT-END>
 		       <TELL
-"You sail away into space as far as your safety line allows, and
+"You sail into space as far as your safety line allows, and
 then back again." CR>)
 		      (ELSE
 		       <ENABLE <QUEUE I-SUFFOCATE 5>>
 		       <TELL
-"You fly away into space like a super-hero. Unfortunately, you keep
-going indefinitely, the artifact dwindling beneath you. The view is nice,
-but eventually you will run out of air." CR>
+"You fly into space like a super-hero. Unfortunately, you keep going
+indefinitely, and eventually you will run out of air." CR>
 		       <CRLF>
 		       <GOTO ,OUTER-SPACE>)>)
 	       (ELSE <CORIOLIS>)>>
@@ -2385,10 +2383,7 @@ hand." CR>)
 			      <CRLF>
 			      <COND (<NOT ,SUIT-ON?>
 				     <CRLF>
-				     <JIGS-UP
-"Didn't they teach you anything in the Academy? You can't breathe
-vacuum! The process of dying is this way is very painful but at least
-relatively short.">)>)
+				     <JIGS-UP ,ACADEMY-DEATH>)>)
 			     (T <DOOR-OPENS>)>
 		       T)>)
 	       (<NOT <FSET? ,PRSO ,OPENBIT>>
@@ -2396,6 +2391,10 @@ relatively short.">)>)
 	       (ELSE
 		<FCLEAR ,PRSO ,OPENBIT>
 		<AIR-HERE>)>>
+
+<GLOBAL ACADEMY-DEATH "Didn't they teach you anything in the Academy? You
+can't breathe vacuum! The process of dying in this way is very painful but
+at least relatively short.">
 
 <ROUTINE IN-AIRLOCK? ()
 	 <OR <EQUAL? ,HERE ,RED-LOCK ,GREEN-LOCK ,YELLOW-LOCK>
@@ -2499,7 +2498,7 @@ relatively short.">)>)
 		<TELL
 "This is the edge of a populated area, growing denser as you move starboard.
 Primitive huts line the corridor, which is blocked ahead by a palisade built of
-mud and wood. An open gate, guarded by several spear-bearing creatures, leads
+mud and wood. An open gate, guarded by several spear-bearing aliens, leads
 into the structure. A small crowd of aliens has gathered to watch you." CR>
 		<COND (<NOT ,ALIENS-DESCRIBED?>
 		       <SETG ALIENS-DESCRIBED? T>
@@ -2534,7 +2533,7 @@ of the tribe." CR>)>)>
 "The palisade smolders a bit, but is otherwise undamaged." CR>)
 	       (<VERB? CLIMB-UP CLIMB-ON>
 		<TELL
-"The palisade in unclimbable from this side." CR>)>>
+"The palisade is unclimbable." CR>)>>
 
 <ROUTINE VILLAGE-FCN (RARG)
 	 <COND (<==? .RARG ,M-BEG>
@@ -2544,7 +2543,11 @@ of the tribe." CR>)>)>
 			    <NOT <IN? ,CHIEF ,VILLAGE>>
 			    <L? ,CHFOLLOW 2>>
 		       <PERFORM ,V?FOLLOW ,CHIEF>
-		       <RTRUE>)>)
+		       <RTRUE>)
+		      (<FSET? ,VIOLET-KEY ,TOUCHBIT>
+		       <JIGS-UP
+"Startled aliens recognize you as the desecrator of their sacred place!
+They attack and overwhelm you by their sheer numbers.">)>)
 	       (<==? .RARG ,M-ENTER>
 		<COND (<IN? ,SPACESUIT ,VILLAGE>
 		       <REMOVE ,JUNK-SPACESUIT>
@@ -2569,11 +2572,10 @@ of the tribe." CR>)>)>
 		<SETG THAT-END <>>
 		<SETG SUIT-ON? <>>
 		<TELL
-"The chieftain removes his suit, and with surprisingly little difficulty dons
-yours. He is clearly delighted with the gift, and his people are truly
-impressed by his new wardrobe. He moves about, pointing at various objects
-(including some of his lesser wives and children) and glancing at you
-quizzically." CR>
+"The chieftain removes his suit and dons yours. He is clearly delighted with
+the gift, and his people are truly impressed by his new wardrobe. He moves
+about, pointing at various objects (including some of his lesser wives and
+children) and glancing at you quizzically." CR>
 		<ENABLE <QUEUE I-CHIEF 2>>
 		<COND (,POINTED?
 		       <TELL
@@ -2609,7 +2611,7 @@ all-grey alien." CR>
 		      (ELSE
 		       <TELL
 "He is dressed in the tattered remains of a space suit of alien manufacture.
-All that remains is the helmet and scraps of the body material." CR>)>
+Only the helmet and scraps of the body material remain." CR>)>
 		<COND (<IN? ,BROWN-KEY ,CHIEF>
 		       <TELL
 "Around his neck hangs a brown crystal rod!" CR>)>
@@ -2633,10 +2635,9 @@ and then at himself, and brandishes his spear menacingly." CR>)
 
 <ROUTINE DESCRIBE-WEASELS ()
 	 <TELL
-"They resemble human-sized weasels in that their bodies are thin,
-flexible, and covered with several colors of hair. There are all sizes
-and ages, and the stronger ones are armed with spears, knives, and other
-nasty hardware." CR>>
+"They resemble human-sized weasels. Their bodies are thin, flexible, and
+covered with several colors of hair. There are all sizes and ages, and the
+stronger ones are armed with spears, knives, and other nasty hardware." CR>>
 
 <ROUTINE ALIENS-FCN ()
 	 <COND (<AND <IN? ,CHIEF ,HERE> <NOT <VERB? ZAP ATTACK>>>
@@ -2661,7 +2662,8 @@ nasty hardware." CR>>
 			      <SPOILED-HUNT>
 			      <COND (<VERB? ZAP>
 				     <CRLF>
-				     <ZAP-ALIENS>)>
+				     <ZAP-ALIENS>
+				     <TELL "The hunting party scatters." CR>)>
 			      <RTRUE>)>)
 		      (ELSE <TELL "There are no aliens here." CR>)>)
 	       (<VERB? ZAP> <ZAP-ALIENS>)
@@ -2686,9 +2688,8 @@ nasty hardware." CR>>
 		       <REMOVE ,CHIEF>)
 		      (ELSE <TELL "Many aliens are">)>
 		<TELL
-" disintegrated, in the best tradition of the 1930s pulps.
-The remainder of the tribe attacks you, seeking revenge. You fire the
-ray gun at them. ">
+" disintegrated, in the best tradition of the 1930s pulps. The remainder of
+the tribe attacks you, seeking revenge. You fire the ray gun at them. ">
 		<COND (<G? ,ZAP-CNT 0>
 		       <TELL
 "It fires " <GET ,ZAP-STRS <- ,ZAP-CNT 1>> ". Each time
@@ -2743,7 +2744,7 @@ many aliens are dispatched, but more appear." CR>)
 saying something like \"That's Greek to me.\"" CR>)
 	       (<VERB? EXAMINE>
 		<TELL
-"The chief is an perfect example of barbarian dignity and splendor.">
+"The chief is a perfect example of barbarian dignity and splendor.">
 		<COND (<IN? ,SPACESUIT ,CHIEF>
 		       <TELL " He is wearing your space suit with the same
 dignity and aplomb which which a dandy would wear his evening clothes.">)
@@ -2792,7 +2793,7 @@ removes the rod from its string and hands it to you." CR>)
 	 <COND (<AND <VERB? ZAP> <CAN-ZAP?>>
 		<SETG ALIENS-FRIENDLY? <>>
 		<TELL
-"She is totally destroyed by the blast! Fortunately for the chief, he has
+"She is vaporized by the blast! Fortunately, the chief, has
 many wives, and this was a lesser one." CR>)
 	       (<VERB? TAKE POINT>
 		<COND (<NOT <IN? ,BROWN-KEY ,CHIEF>> <RFALSE>)
@@ -2849,14 +2850,15 @@ grinning and grunting in a friendly way." CR>)
 		       <COND (<OR <IN? ,SPACESUIT ,ADVENTURER>
 				  <IN? ,SPACESUIT ,HERE>>
 			      <TELL "your space suit.">)
-			     (ELSE
-			      <TELL "various objects.">)>
+			     (<IN? ,SPACESUIT ,CHIEF>
+			      <TELL "various objects.">)
+			     (ELSE <TELL "you.">)>
 		       <CRLF>)>
 		<ENABLE <QUEUE I-CHIEF 2>>
 		<RTRUE>)
 	       (<IN? ,CHIEF ,GREEN-THREE>
 		<TELL
-"The chief grins, exposing his knife-sharp teeth, and points portentiously at
+"The chief grins, exposing his pointy teeth, and points portentiously at
 the ladder. He curls up on the dirt floor and waits, watching you with
 interest." CR>
 		<DISABLE <INT I-CHIEF>>
@@ -2905,14 +2907,14 @@ slides out of the space suit and onto the floor." CR>)
 		      (ELSE
 		       <SETG ALIENS-FRIENDLY? <>>
 		       <JIGS-UP
-"This time, the skeleton falls apart with a horrendous clatter. In a moment,
-a head peeks through the door. It's a weasel! He roars, and soon dozens of
-the aliens surround you. The rest is, alas, too gory to describe.">)>)
+"This time, the skeleton falls apart with a horrendous clatter. A head peeks
+through the door. It's a weasel! He roars, and soon dozens of the aliens
+surround you. The rest, alas, is too gory to describe.">)>)
 	       (<AND <VERB? ZAP> <CAN-ZAP?>>
 		<SETG ALIENS-FRIENDLY? <>>
 		<JIGS-UP
-"The skeleton is totally destroyed by the blast! The aliens, hearing it,
-rush in and overwhelm you for desecrating their sacred place.">)>>
+"The skeleton is destroyed by the blast! The aliens, hearing it, rush in and
+skewer you for desecrating their sacred place.">)>>
 
 <GLOBAL CAUGHT? <>>
 
@@ -2953,8 +2955,8 @@ surround you, spears at the ready.">
 	 <COND (<==? .RARG ,M-LOOK>
 		<TELL
 "The force projectors here aren't working, but the cage is nonetheless
-inhabited by many creatures who are crosses between a rat and an ant. They
-are multi-legged with chitinous shells and a pincer arrangement for a mouth,
+inhabited by many creatures who resemble crosses between a rat and an ant.
+They are multi-legged with chitinous shells and pincers around their mouths,
 but they have long ratlike tails and sparse tufts of hair. Some of them are
 armed with tiny spears and walk precariously on their hind legs.">
 		<COND (<IN? ,NEST ,NEST-CAGE>
@@ -2979,7 +2981,7 @@ smaller pieces.">
 			      <TELL ".">)>)>
 		<COND (,RATS-MAD?
 		       <TELL
-" The rat-ants are extremely agitated about your presence, and a detail
+" The rat-ants are extremely agitated by your presence, and a detail
 follows you just out of reach, hissing and clicking their mandibles.">)>
 		<CRLF>)>>
 
@@ -2992,11 +2994,11 @@ follows you just out of reach, hissing and clicking their mandibles.">)>
 		<RTRUE>)
 	       (<VERB? EXAMINE>
 		<TELL
-"The rat-ant looks like a cross between a rat and an ant. They have
-chitinous shells, mandibles, and exhibit an ant-like social order. They also
-have hair, bear live young, and are roughly the size of rats. They have a
-crude intelligence, evidenced by the spears the warrior caste carries. The
-cage has many rat-ants of varying sizes, ages, and social roles." CR>)
+"They look like a cross between a rat and an ant. They have chitinous shells,
+mandibles, and exhibit an ant-like social order. They also have hair, bear
+live young, and are roughly the size of rats. They have a crude intelligence,
+evidenced by the spears of the warrior caste. The cage has many rat-ants of
+varying sizes, ages, and social roles." CR>)
 	       (<AND <VERB? ZAP> <CAN-ZAP?>>
 		<SETG RATS-MAD? T>
 		<TELL
@@ -3172,7 +3174,7 @@ unfortunately unreadable." CR>)
 		       <RTRUE>)
 		      (ELSE <TELL "There is nothing inside the barrel." CR>)>)
 	       (<AND <VERB? SHAKE> .I>
-		<TELL "There is something loose inside it." CR>)
+		<TELL "It rattles loudly." CR>)
 	       (<AND <VERB? PUT> <==? ,ZAP-GUN ,PRSI>>
 		<COND (.I <TELL "There is already something inside it." CR>)
 		      (<NOT <FSET? ,PRSO ,KEYBIT>>
@@ -3192,7 +3194,9 @@ unfortunately unreadable." CR>)
 		<SETG ZAP-CNT <- ,ZAP-CNT 1>>
 		<COND (.I
 		       <REMOVE .I>
-		       <SETG ZAP-CNT <- ,ZAP-CNT 1>>
+		       <FSET ,ZAP-GUN ,OPENBIT>
+		       <COND (<NOT <0? ,ZAP-CNT>>
+			      <SETG ZAP-CNT <- ,ZAP-CNT 1>>)>
 		       <TELL
 "A giant blast">
 		       <COND (<==? .I ,SILVER-KEY>
@@ -3232,10 +3236,10 @@ you and your possessions as well.">)
 		      (<OR <FSET? ,PRSI ,TAKEBIT> <FSET? ,PRSI ,VICBIT>>
 		       <REMOVE ,PRSI>
 		       <TELL
-"There is a horrendous explosion from the barrel of the ray gun, and a huge
-gout of orange rays envelops the " D ,PRSI ". You are knocked spinning by the
-recoil, and when you recover, nothing is left of the " D ,PRSI " but a tiny
-drift of dust." CR>)
+"There is a horrendous explosion from the ray gun, and a huge gout of orange
+rays envelops the " D ,PRSI ". You are knocked spinning by the recoil, and
+when you recover, you see no sign of the " D ,PRSI " but a tiny drift of
+dust." CR>)
 		      (ELSE
 		       <TELL
 "An explosion of orange rays sweeps over the " D ,PRSI ", but when the
@@ -3277,9 +3281,15 @@ smoke clears, it is still there (though perhaps a bit singed)." CR>)>)
 <ROUTINE TREETOP-FCN (RARG)
 	 <COND (<==? .RARG ,M-BEG>
 		<COND (<VERB? DROP THROW>
-		       <MOVE ,PRSO ,BASE-OF-TREE>
-		       <TELL
+		       <COND (<IDROP>
+			      <COND (<AND <EQUAL? ,PRSO
+						  ,SPACESUIT ,SAFETY-LINE>
+					  <APPLY <GETP ,PRSO ,P?ACTION>>>
+				     <RTRUE>)>
+			      <MOVE ,PRSO ,BASE-OF-TREE>
+			      <TELL
 "The " D ,PRSO " drops out of sight." CR>)
+			     (ELSE <RTRUE>)>)
 		      (<VERB? FLY>
 		       <JIGS-UP
 "You aren't a bird, so you plummet rather than soar.">)
@@ -3444,11 +3454,11 @@ dead-black circle appears." CR>)>>
 		       <TELL "You can't do that." CR>)
 		      (<==? ,PRSO ,BLACK-KEY>
 		       <TELL
-"The rod slides easily into the slot, and as it does, the lights go out in
-the bubble. Outside, you can see dead
-black night settling over everything. An expressionless voice speaks inside
-your head: \"Emergency shutoff mechanism activated...\" The voice gets quieter
-and quieter, and finally silence rules over all.|
+"As the rod slides easily into the slot, the lights go out in the bubble.
+Outside, you can see dead black night settling over everything. An
+expressionless voice speaks inside your head: \"Emergency shutoff mechanism
+activated...\" The voice gets quieter and quieter, and finally silence rules
+over all.|
 ">
 		       <FINISH>)
 		      (<FSET? ,PRSO ,KEYBIT>
@@ -3479,10 +3489,10 @@ to the hatch." CR>)
 <ROUTINE CONTROL-BUBBLE-ROOM-FCN (RARG)
 	 <COND (<==? .RARG ,M-LOOK>
 		<TELL
-"This room seems to be the main control room of the artifact.
-The control bubble itself is transparent and you can look out upon the
-interior of the artifact. Far off, mostly hidden by the tallest trees of the
-forest, is the matching drive bubble. One way out is the hatch, which is ">
+"This room must be the main control room of the artifact. The control bubble
+itself is transparent and you can look out upon the interior of the artifact.
+Far off, hidden among the tallest trees of the forest, is the matching drive
+bubble. One way out is the hatch, which is ">
 		<COND (<FSET? ,CONTROL-BUBBLE-HATCH ,OPENBIT>
 		       <TELL "open.">)
 		      (ELSE <TELL "closed.">)>
@@ -3516,7 +3526,7 @@ surrounded by clear crystal.">)>
 	 <COND (<NOT <FSET? ,GRASSLAND ,TOUCHBIT>>
 		<ENABLE <QUEUE I-HUNTERS 2>>)>
 	 <TELL
-"You climb a long vertical shaft for a considerable distance. The shaft opens
+"You climb a vertical shaft for a considerable distance. The shaft opens
 into a gigantic space which obviously occupies most of the interior of the
 artifact. The area is " <COND (,NIGHT? "dimly")
 							(T "brightly")>
@@ -3582,7 +3592,8 @@ form back into a herd some distance away." CR>
 		<TELL
 "The creatures move off as you approach, so you can't get very close to
 them." CR>
-		<SPOILED-HUNT>)>>
+		<SPOILED-HUNT>
+		<RFALSE>)>>
 
 <ROUTINE SPOILED-HUNT ()
 	 <COND (<AND <G? ,HUNTER-COUNT 0>
@@ -3617,7 +3628,11 @@ see by; it's like a clear, moonlit night back on earth." CR>)>)>
 <ROUTINE BOMBS-AWAY ("AUX" A B)
 	 <COND (<EQUAL? ,PRSO ,RED-DISK ,BLUE-DISK>
 		<DISK-SWITCH ,PRSO T>)>
-	 <COND (<EQUAL? ,PRSI ,DRIVE-BUBBLE ,CONTROL-BUBBLE>
+	 <COND (<NOT <IDROP>> <RTRUE>)
+	       (<AND <EQUAL? ,PRSO ,SPACESUIT ,SAFETY-LINE>
+		     <APPLY <GETP ,PRSO ,P?ACTION>>>
+		<RTRUE>)
+	       (<EQUAL? ,PRSI ,DRIVE-BUBBLE ,CONTROL-BUBBLE>
 		<MOVE ,PRSO
 		      <COND (<==? ,PRSI ,DRIVE-BUBBLE> ,FOREST)
 			    (ELSE ,FORE-END)>>
@@ -3713,8 +3728,8 @@ weightless area near the center of the cylinder." CR>
 	       (<==? .TARGET ,GROUND>
 		<JIGS-UP
 " You are now some distance from the axis of the cylinder. Air resistance and
-centripetal force take hold and you start to fall, faster and faster, in a
-lovely arc that ends as you splatter against the ground.">)>>
+centripetal force take hold and you start to fall in a lovely arc that ends
+as you splatter against the ground.">)>>
 
 <ROUTINE OBSERVATORY-FCN (RARG "AUX" X)
 	 <COND (<==? .RARG ,M-LOOK>
@@ -4112,9 +4127,8 @@ that of the artifact. The line terminates " <GET ,COURSES ,COURSE-SHAPE>
 				     <SCORE-UPD ,CONTROL-SCORE>
 				     <SETG CONTROL-SCORE 0>
 				     <TELL
-"All of the displays flash once. There is a sensation of movement
-as the artifact positions itself to follow the course you have laid for it."
-CR>
+"All the displays flash once. There is a sensation of movement
+as the artifact positions itself to follow the course you have set." CR>
 				     <WIN-GAME>)
 				    (ELSE <SPOT-FLASH>)>)
 			     (ELSE <SPOT-FLASH>)>)
@@ -4136,12 +4150,11 @@ the knowledge it contains will immeasureably benefit mankind. Within a few
 years, there could be human ships flying out to the stars, and all because of
 your daring and cunning...|
 |
-A holographic projection of a humanoid figure appears before you. The being
-is tall, thin, and swathed in shimmering robes. It speaks perfectly but
-expressionlessly in your own language. \"Congratulations, you who have
-passed our test. You have succeeded where others failed. Your race shall
-benefit thereby.\" He smiles. \"I expect to see you in person, someday.\" The
-projection fades.|
+A holographic projection of a humanoid figure appears before you. The being,
+tall and thin, swathed in shimmering robes, speaks in your own language.
+\"Congratulations, you who have passed our test. You have succeeded where
+others failed. Your race shall benefit thereby.\" He smiles. \"I expect to
+see you in person, someday.\" The projection fades.|
 " CR>)
 		      (ELSE
 		       <TELL
@@ -4155,9 +4168,9 @@ around the Earth and back into interstellar space, never to return.")>>
 	       (ELSE
 		<TELL
 "The artifact moves confidently towards " <GET ,TARGETS ,TARGET> ",
-but its computer system is smart enough to know where you came from, and
-it realizes that you have made the wrong choice. All shipboard systems
-shut down, and the rest is silence." CR>)>
+but its computer system is smart enough to know where you came from, so
+it realizes that you have made the wrong choice. All systems shut down,
+and silence settles over all." CR>)>
 	 <FINISH>>
 
 <ROUTINE ON-ARTIFACT? ()
@@ -4208,8 +4221,7 @@ beside it." CR>)
 	       (T <SET OBJ ,ALIENS>)>
 	 <COND (<VERB? TAKE>
 		<TELL
-"Every " D .OBJ " regards you with some suspicion and won't give you
-a weapon." CR>)
+"Every " D .OBJ " regards you with suspicion and won't give you a weapon." CR>)
 	       (<VERB? ZAP>
 		<PERFORM ,V?ZAP .OBJ>
 		<RTRUE>)>>
